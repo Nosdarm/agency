@@ -94,12 +94,14 @@ function PriceCard({
   features,
   highlight = false,
   badge,
+  ideal,
 }: {
   name: string;
   price: string;
   features: string[];
   highlight?: boolean;
   badge?: string;
+  ideal?: string;
 }) {
   return (
     <Card3D className="group">
@@ -113,17 +115,17 @@ function PriceCard({
         )}
         <h3 className="text-white text-xl font-semibold">{name}</h3>
         <div className="mt-4">
-          <span className="text-4xl font-semibold text-white">{price}</span>
-          <span className="text-neutral-400 ml-2">fixed-price</span>
+          <span className="text-3xl font-semibold text-white">{price}</span>
         </div>
-        <ul className="mt-6 space-y-3">
+        <ul className="mt-6 space-y-3 flex-1">
           {features.map((f, i) => (
             <Check key={i}>{f}</Check>
           ))}
         </ul>
+        {ideal && <p className="mt-4 text-sm text-violet-300/80 italic">{ideal}</p>}
         <a
           href="#contact"
-          className={`mt-8 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-white shadow ${
+          className={`mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-white shadow ${
             highlight
               ? `bg-gradient-to-r ${brand.primary}`
               : "bg-neutral-800 hover:bg-neutral-700"
@@ -139,117 +141,132 @@ function PriceCard({
 const features = [
   {
     icon: Code2,
-    title: "AI-Accelerated Development",
-    desc: "We generate routine layers (CRUD, types, tests), leaving architecture and review to experienced engineers.",
+    title: "SaaS Platforms",
+    desc: "Full-cycle B2B/B2C SaaS development. Multi-tenancy, subscription management & billing, admin panels. Stack: Next.js, Node.js, PostgreSQL, Stripe. Timeline: 3-5 weeks.",
   },
   {
     icon: Rocket,
-    title: "MVP in 3–5 Weeks",
-    desc: "Backend and frontend templates, ready design system, CI. Weekly demos with real progress.",
+    title: "Mobile Applications",
+    desc: "Cross-platform iOS & Android development. One codebase, native performance, push notifications, offline mode, App Store/Google Play publishing. Stack: React Native, Expo, Firebase. Timeline: 3-4 weeks.",
   },
   {
     icon: Shield,
-    title: "Clear Boundaries",
-    desc: "Fixed-price, SOW/DoD, feature freeze. Changes handled through transparent change requests.",
+    title: "Web Applications",
+    desc: "Progressive Web Apps and classic web services. Mobile-first responsive design, real-time functionality, SEO optimization, CDN integration. Stack: React, Vue.js, Tailwind CSS, Vercel. Timeline: 2-3 weeks.",
   },
   {
     icon: Gauge,
-    title: "Production-Ready Products",
-    desc: "Tech stack for your needs: React/Vite, Next.js, FastAPI/NestJS, PostgreSQL, Stripe, Redis.",
-  },
-  {
-    icon: Lock,
-    title: "Security Basics",
-    desc: "Auth, roles, validation, logging. Minimum — JWT/OAuth + industry best practices.",
-  },
-  {
-    icon: Clock,
-    title: "Fast Start",
-    desc: "Specification within 48h after call. Deploy to Vercel/Render/Fly/Hetzner.",
+    title: "Marketplace & Platforms",
+    desc: "Two-sided platforms and marketplaces. User & vendor portals, payment processing with escrow, ratings & reviews, search & filters. Stack: Next.js, Supabase, Stripe Connect. Timeline: 4-5 weeks.",
   },
 ];
 
 const packages = [
   {
-    name: "MVP Core",
-    price: "$5,900",
+    name: "Startup MVP",
+    price: "$15,000 - $25,000",
     features: [
-      "Authentication & user roles",
-      "3–5 CRUD entities",
-      "1 dashboard/report",
-      "1 integration (Stripe/SMTP)",
-      "Deploy + 7 days bug fixes",
+      "Up to 10 key features",
+      "Web OR Mobile (one platform)",
+      "Basic analytics",
+      "2-3 weeks development",
+      "30 days support",
     ],
+    ideal: "Perfect for: idea validation, first users",
   },
   {
-    name: "MVP Plus",
-    price: "$7,900",
+    name: "Scale-Ready Platform",
+    price: "$25,000 - $45,000",
     badge: "Most Popular",
     features: [
-      "Everything from Core",
-      "Additional integrations (2x)",
-      "Email/Push + basic analytics",
-      "UAT week + extra revisions",
+      "Up to 20 features",
+      "Web + Mobile",
+      "Payments & subscriptions",
+      "Admin panel",
+      "3-5 weeks development",
+      "60 days support",
     ],
     highlight: true,
+    ideal: "Perfect for: quick market entry, fundraising",
   },
   {
-    name: "AI Booster",
-    price: "$3,000",
+    name: "Enterprise Foundation",
+    price: "$45,000+",
     features: [
-      "LLM feature for existing product",
-      "Chat/summary/clustering",
-      "Secure prompts & tracing",
-      "Integration documentation",
+      "Unlimited scope",
+      "Multi-platform",
+      "Integrations & API",
+      "Compliance ready",
+      "4-8 weeks",
+      "90 days support",
     ],
+    ideal: "Perfect for: legacy system replacement, enterprise pilots",
   },
 ];
 
 const steps = [
   {
     icon: CalendarDays,
-    title: "20–30 min call",
-    desc: "Goals, risks, integrations. Access and limitations.",
+    title: "Week 0: Discovery (2 days)",
+    desc: "Technical interview & requirements analysis. Define MVP scope and priorities. Choose tech stack. Fix price and timeline. Deliverable: Technical specification & Figma prototype.",
   },
-  { icon: FileText, title: "Spec in 48h", desc: "SOW/DoD, timeline, cost, exclusions." },
-  { icon: Search, title: "Weekly demos", desc: "Feedback in short cycles. Feature freeze per specs." },
-  { icon: Rocket, title: "Deploy & handoff", desc: "Documentation, access, 7 days bug fixes." },
+  {
+    icon: FileText,
+    title: "Week 1: Foundation",
+    desc: "Infrastructure setup & CI/CD. Basic architecture & database schema. Authentication & authorization. Core business logic. Deliverable: Working backend & basic UI."
+  },
+  {
+    icon: Code2,
+    title: "Week 2-3: Core Features",
+    desc: "Implement key features. Payment & external service integrations. Unit & integration tests. API documentation. Deliverable: Beta version for testing."
+  },
+  {
+    icon: Rocket,
+    title: "Week 4-5: Polish & Launch",
+    desc: "UI/UX improvements based on feedback. Performance optimization. Security audit. Production deployment. Handover with 30 days free support. Deliverable: Live product & source code."
+  },
 ];
 
 const faqs = [
   {
-    q: "How exactly does AI accelerate development?",
-    a: "We generate routine parts (CRUD, test stubs, types, API wrappers). Architecture, security, critical logic and code review remain with experienced engineers.",
+    q: "What if I need more features after launch?",
+    a: "We offer post-MVP development in sprints. You can hire us or your own team - the code is fully yours.",
   },
   {
-    q: "What about security and data privacy?",
-    a: "We avoid uploading sensitive data to external LLMs. For production — validation, authentication, logging, permission controls; optionally — self-hosted LLM or proxy gateway.",
+    q: "Can I participate in development?",
+    a: "Absolutely! We work in an open GitHub repository. Weekly calls and constant communication via Slack.",
   },
   {
-    q: "How do you fix project boundaries?",
-    a: "In SOW/DoD: clear screens and flows, unambiguous acceptance criteria. Everything outside — through change request with estimation and timeline.",
+    q: "What's included in support?",
+    a: "Critical bug fixes, deployment assistance, scaling consultations, minor improvements.",
   },
   {
-    q: "Can we start with Paid Discovery?",
-    a: "Yes: 3–5 days, $400–$800. Output — feature map, risks and estimation. Discovery cost is deducted from package when starting.",
+    q: "What quality guarantees do you provide?",
+    a: "Code review by senior developers, 80%+ test coverage, OWASP security standards compliance, performance benchmarks.",
   },
 ];
 
 const cases = [
   {
-    title: "CRM for SMB network",
-    desc: "Order tracking, roles, reports. Integrations: email + payments.",
-    chips: ["React", "FastAPI", "PostgreSQL", "Stripe"],
+    title: "Food Delivery Platform",
+    desc: "Local food delivery marketplace. Timeline: 22 days. Results: 500 orders in first month, $50k MRR after 6 months.",
+    chips: ["Next.js", "Node.js", "PostgreSQL", "Stripe"],
+    quote: "Launched faster than competitors and captured the niche",
+    author: "CEO, FoodTech Startup",
   },
   {
-    title: "SaaS Admin Dashboard",
-    desc: "Key metrics, plan management, report exports.",
-    chips: ["Next.js", "tRPC/NestJS", "Prisma", "Vercel"],
+    title: "B2B SaaS for Subscription Management",
+    desc: "Subscription management platform. Timeline: 28 days. Results: 50 paying customers in 3 months.",
+    chips: ["React", "Python FastAPI", "PostgreSQL", "Paddle"],
+    quote: "Code is so clean that we easily hired a team for further development",
+    author: "CTO, SubscriptionTech",
   },
   {
-    title: "AI Support Module",
-    desc: "Ticket summaries and similar search — faster resolution and responses.",
-    chips: ["LLM", "RAG", "Observability"],
+    title: "Fitness Mobile App",
+    desc: "Mobile fitness application. Timeline: 19 days. Results: 10k downloads, 15% conversion to paid.",
+    chips: ["React Native", "Firebase", "RevenueCat"],
+    quote: "From Figma to App Store in 3 weeks - it was incredible",
+    author: "Founder, FitTech App",
   },
 ];
 
@@ -298,8 +315,8 @@ function TestimonialsSection() {
 }
 
 export function buildMailto({ name, email, packageName, message }: { name: string; email: string; packageName: string; message: string }) {
-  const to = "sales@yourstudio.dev";
-  const subject = encodeURIComponent(`Specification Request — ${name || "client"}`);
+  const to = "hello@builditfast.ai";
+  const subject = encodeURIComponent(`Project Estimate Request — ${name || "client"}`);
   const body = encodeURIComponent([
     `Package: ${packageName || "Not selected"}`,
     `Name: ${name}`,
@@ -315,7 +332,7 @@ function useMailto({ name, email, packageName, message }: { name: string; email:
 }
 
 export default function Landing() {
-  const [form, setForm] = useState({ name: "", email: "", pkg: "MVP Core", message: "Describe your task and desired timeline…" });
+  const [form, setForm] = useState({ name: "", email: "", pkg: "Startup MVP", message: "Describe your project idea and desired timeline..." });
   const mailto = useMailto({ name: form.name, email: form.email, packageName: form.pkg, message: form.message });
 
   return (
@@ -334,7 +351,7 @@ export default function Landing() {
           <div className={`${SECTION_CLASSES} h-16 flex items-center justify-between`}>
             <a href="#top" className="inline-flex items-center gap-2">
               <div className={`w-7 h-7 rounded-xl bg-gradient-to-br ${brand.primary}`} />
-              <span className="font-semibold tracking-wide">AICODE Studio</span>
+              <span className="font-semibold tracking-wide">BuildItFast.ai</span>
             </a>
             <nav className="hidden md:flex items-center gap-6 text-sm text-neutral-300" aria-label="Main navigation">
               <a className="hover:text-white transition" href="#features">Features</a>
@@ -349,7 +366,7 @@ export default function Landing() {
               href="#contact"
               className={`hidden md:inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white bg-gradient-to-r ${brand.primary} shadow`}
             >
-              Request Specification <ArrowRight className="w-4 h-4" />
+              Get Estimate <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         </header>
@@ -360,28 +377,29 @@ export default function Landing() {
             <div className="grid lg:grid-cols-2 gap-10 items-center">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
                 <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-violet-300/90 mb-4">
-                  <Sparkles className="w-4 h-4" /> AI-Powered Development
+                  <Sparkles className="w-4 h-4" /> Launch Your MVP in 21 Days
                 </div>
                 <h1 className="text-4xl sm:text-5xl font-semibold text-white leading-tight">
-                  MVP Development for Startups with AI Acceleration{" "}
-                  <span className={`bg-clip-text text-transparent bg-gradient-to-r ${brand.primary}`}>in 3–5 Weeks</span>
+                  Launch Your MVP in{" "}
+                  <span className={`bg-clip-text text-transparent bg-gradient-to-r ${brand.primary}`}>21 Days</span>
+                  <br />Web • Mobile • SaaS
                 </h1>
                 <p className="mt-5 text-neutral-300 text-lg leading-relaxed">
-                  From <strong>$5,900 fixed-price</strong>. Professional MVP development with React, Next.js and FastAPI.
-                  Transparent timelines, weekly demos. We work with B2B SaaS startups from USA, Europe and Ukraine.
+                  From technical specification to production-ready product with first users.
+                  Fixed price. Full code ownership. Ready to scale.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
                   <a href="#contact" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg`}>
-                    Discuss Project <ArrowRight className="w-4 h-4" />
+                    Get Project Estimate <ArrowRight className="w-4 h-4" />
                   </a>
-                  <a href="#pricing" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 ${brand.ring}`}>
-                    Pricing & Timeline
+                  <a href="#cases" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 ${brand.ring}`}>
+                    View Case Studies
                   </a>
                 </div>
                 <ul className="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
-                  <Check>Spec in 48 hours</Check>
-                  <Check>Demo every week</Check>
-                  <Check>7 days bug fixes</Check>
+                  <Check>32 MVPs launched</Check>
+                  <Check>Average NPS: 72</Check>
+                  <Check>Idea to first revenue: 45 days</Check>
                 </ul>
               </motion.div>
 
@@ -396,15 +414,15 @@ export default function Landing() {
             </div>
           </section>
 
-          {/* Features */}
+          {/* What We Build */}
           <section id="features" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="features-heading">
             <SectionTitle
               id="features-heading"
-              kicker="Features"
-              title="AI-Accelerated MVP Development: Speed Without Chaos"
-              subtitle="We use modern AI tools (Cursor, Claude, GitHub Copilot) to accelerate routine component development by 25-40%. Architecture and code review remain with experienced developers."
+              kicker="What We Build"
+              title="Focus on Products That Generate Revenue"
+              subtitle="From concept to production-ready product in 21 days. We build web, mobile, and SaaS platforms that scale."
             />
-            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div className="mt-10 grid md:grid-cols-2 gap-5">
               {features.map((f, i) => (
                 <FeatureItem key={i} icon={f.icon} title={f.title} desc={f.desc} />
               ))}
@@ -416,29 +434,35 @@ export default function Landing() {
             <SectionTitle
               id="pricing-heading"
               kicker="Pricing"
-              title="MVP Development Cost: Transparent Packages"
-              subtitle="Fixed prices for MVP development for startups. No hidden fees and scope changes. All requirements fixed in SOW before start."
+              title="Transparent Pricing"
+              subtitle="Fixed prices for MVP development. No hidden fees or scope changes. All requirements fixed before start."
             />
             <div className="mt-12 grid lg:grid-cols-3 gap-6">
               {packages.map((p, i) => (
-                <PriceCard key={p.name} name={p.name} price={p.price} features={p.features} highlight={Boolean((p as any).highlight)} badge={(p as any).badge} />
+                <PriceCard key={p.name} name={p.name} price={p.price} features={p.features} highlight={Boolean((p as any).highlight)} badge={(p as any).badge} ideal={(p as any).ideal} />
               ))}
             </div>
           </section>
 
           {/* Cases */}
           <section id="cases" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="cases-heading">
-            <SectionTitle id="cases-heading" kicker="Cases" title="MVP Development Examples" subtitle="Ready to show live examples and pet projects on a call." />
+            <SectionTitle id="cases-heading" kicker="Case Studies" title="MVPs That Became Profitable Products" subtitle="Real examples of startups that launched fast and captured their market." />
             <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {cases.map((c) => (
                 <article key={c.title} className="group rounded-2xl border border-white/5 bg-white/5 hover:bg-white/[0.07] transition p-6 flex flex-col">
                   <h3 className="text-white font-medium text-lg">{c.title}</h3>
-                  <p className="text-neutral-300 mt-2 flex-1">{c.desc}</p>
+                  <p className="text-neutral-300 mt-2 flex-1 text-sm">{c.desc}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {c.chips.map((x) => (
                       <Chip key={x}>{x}</Chip>
                     ))}
                   </div>
+                  {(c as any).quote && (
+                    <div className="mt-4 border-l-2 border-violet-500/50 pl-3">
+                      <p className="text-neutral-300 text-sm italic">"{(c as any).quote}"</p>
+                      <p className="text-neutral-400 text-xs mt-1">— {(c as any).author}</p>
+                    </div>
+                  )}
                   <div className="mt-5">
                     <a href="#contact" className="inline-flex items-center gap-2 text-sm text-violet-300 hover:text-violet-200">
                       Discuss Similar <ArrowRight className="w-4 h-4" />
@@ -451,15 +475,15 @@ export default function Landing() {
 
           {/* Process */}
           <section id="process" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="process-heading">
-            <SectionTitle id="process-heading" kicker="Process" title="How MVP Development Works" subtitle="Short call → spec in 48h → weekly demos → deploy." />
-            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            <SectionTitle id="process-heading" kicker="Process" title="5 Weeks From Brief to Launch" subtitle="Transparent development process with weekly demos and continuous feedback." />
+            <div className="mt-10 grid md:grid-cols-2 gap-5">
               {steps.map((s, i) => (
                 <article key={s.title} className="rounded-2xl border border-white/5 bg-white/5 p-6 flex flex-col">
                   <div className={`inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr ${brand.primary} text-white shadow`}>
                     <s.icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-white font-medium text-lg mt-4">{i + 1}. {s.title}</h3>
-                  <p className="text-neutral-300 mt-2 flex-1">{s.desc}</p>
+                  <h3 className="text-white font-medium text-lg mt-4">{s.title}</h3>
+                  <p className="text-neutral-300 mt-2 flex-1 text-sm leading-relaxed">{s.desc}</p>
                 </article>
               ))}
             </div>
@@ -470,7 +494,7 @@ export default function Landing() {
 
           {/* FAQ */}
           <section id="faq" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="faq-heading">
-            <SectionTitle id="faq-heading" kicker="FAQ" title="Frequently Asked Questions About MVP Development" />
+            <SectionTitle id="faq-heading" kicker="FAQ" title="Frequently Asked Questions" />
             <div className="mt-10 grid md:grid-cols-2 gap-6">
               {faqs.map((f) => (
                 <details key={f.q} className="group rounded-xl border border-white/10 bg-white/[0.03] p-5 open:bg-white/[0.05]">
@@ -488,10 +512,10 @@ export default function Landing() {
           <section id="contact" className={`${SECTION_CLASSES} py-16 sm:py-24`} aria-labelledby="contact-heading">
             <div className="grid lg:grid-cols-5 gap-8">
               <div className="lg:col-span-2">
-                <SectionTitle id="contact-heading" kicker="Contact" title="Request Free Specification" subtitle="Leave your contacts and brief description — we'll return with SOW/DoD within 48 hours." />
+                <SectionTitle id="contact-heading" kicker="Contact" title="Ready to Discuss Your Project?" subtitle="Leave your details and brief description — we'll respond with a detailed estimate within 48 hours." />
                 <div className="mt-8 space-y-4 text-neutral-300">
-                  <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-violet-300"/> Quick call: 20–30 minutes</div>
-                  <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-violet-300"/> sales@yourstudio.dev</div>
+                  <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-violet-300"/> hello@builditfast.ai</div>
+                  <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-violet-300"/> Telegram: @builditfast</div>
                 </div>
               </div>
 
@@ -557,10 +581,10 @@ export default function Landing() {
 
                   <div className="mt-6 flex flex-col sm:flex-row gap-3">
                     <button type="submit" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg min-h-[48px]`}>
-                      Send Request <ArrowRight className="w-4 h-4" />
+                      Get Project Estimate <ArrowRight className="w-4 h-4" />
                     </button>
                     <a
-                      href="https://calendly.com/"
+                      href="https://calendly.com/builditfast"
                       target="_blank"
                       rel="noreferrer noopener"
                       className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 min-h-[48px]"
@@ -579,7 +603,7 @@ export default function Landing() {
           <div className={`${SECTION_CLASSES} py-10 flex flex-col sm:flex-row items-center justify-between gap-6`}>
             <div className="flex items-center gap-2">
               <div className={`w-6 h-6 rounded-lg bg-gradient-to-br ${brand.primary}`} />
-              <span className="text-sm text-neutral-300">© {new Date().getFullYear()} AICODE Studio. All rights reserved.</span>
+              <span className="text-sm text-neutral-300">© {new Date().getFullYear()} BuildItFast.ai. All rights reserved.</span>
             </div>
             <div className="flex items-center gap-5 text-sm">
               <a href="#" className="text-neutral-300 hover:text-white">Privacy Policy</a>

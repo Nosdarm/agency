@@ -13,30 +13,30 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://yourstudio.dev'),
-  title: 'AI Studio | MVP разработка за 3-5 недель | React, FastAPI, PostgreSQL',
-  description: 'Разработка MVP с AI-ускорением от $5,900. Фикс-прайс, прозрачные сроки, еженедельные демо. Next.js, React, FastAPI, PostgreSQL. Работаем с B2B SaaS стартапами из США, Европы и Украины.',
+  metadataBase: new URL('https://builditfast.ai'),
+  title: 'BuildItFast.ai | Launch Your MVP in 21 Days | Web, Mobile, SaaS Development',
+  description: 'Launch production-ready MVPs in 21 days. Fixed price, full code ownership. Build SaaS platforms, mobile apps, and web applications that scale. From $15,000.',
   keywords: [
-    'разработка mvp',
-    'ai разработка',
-    'mvp за 5 недель',
-    'стартап разработка',
-    'react разработка',
-    'fastapi разработка',
-    'фикс прайс разработка',
-    'аутсорс разработка украина',
-    'разработка mvp для стартапа',
-    'заказать разработку mvp',
-    'mvp разработка стоимость',
-    'разработка mvp цена',
-    'b2b saas разработка',
-    'next.js разработка',
-    'postgresql разработка',
-    'разработка mvp украина'
+    'mvp development',
+    'startup development',
+    'saas development',
+    'mobile app development',
+    'web application development',
+    'react development',
+    'next.js development',
+    'react native development',
+    'mvp in 21 days',
+    'fixed price development',
+    'startup mvp',
+    'mvp cost',
+    'mvp pricing',
+    'production ready mvp',
+    'scalable mvp',
+    'b2b saas development'
   ],
-  authors: [{ name: 'AICODE Studio', url: 'https://yourstudio.dev' }],
-  creator: 'AICODE Studio',
-  publisher: 'AICODE Studio',
+  authors: [{ name: 'BuildItFast.ai', url: 'https://builditfast.ai' }],
+  creator: 'BuildItFast.ai',
+  publisher: 'BuildItFast.ai',
   formatDetection: {
     email: false,
     address: false,
@@ -44,27 +44,27 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    locale: 'ru_RU',
-    url: 'https://yourstudio.dev',
-    siteName: 'AICODE Studio',
-    title: 'AI Studio | MVP разработка за 3-5 недель',
-    description: 'Разработка MVP с AI-ускорением от $5,900. Фикс-прайс, прозрачные сроки, еженедельные демо. React, FastAPI, PostgreSQL.',
+    locale: 'en_US',
+    url: 'https://builditfast.ai',
+    siteName: 'BuildItFast.ai',
+    title: 'BuildItFast.ai | Launch Your MVP in 21 Days',
+    description: 'Launch production-ready MVPs in 21 days. Fixed price, full code ownership. Build web, mobile, and SaaS platforms that scale.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'AICODE Studio - Разработка MVP с AI-ускорением',
+        alt: 'BuildItFast.ai - Launch Your MVP in 21 Days',
         type: 'image/jpeg',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Studio | MVP разработка за 3-5 недель',
-    description: 'Разработка MVP с AI-ускорением от $5,900. Фикс-прайс, прозрачные сроки.',
+    title: 'BuildItFast.ai | Launch Your MVP in 21 Days',
+    description: 'Launch production-ready MVPs in 21 days. Fixed price, full code ownership.',
     images: ['/og-image.jpg'],
-    creator: '@yourstudio',
+    creator: '@builditfast',
   },
   robots: {
     index: true,
@@ -79,7 +79,7 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://yourstudio.dev',
+    canonical: 'https://builditfast.ai',
   },
   verification: {
     google: 'YOUR_GOOGLE_VERIFICATION_CODE',
@@ -96,7 +96,7 @@ export default function RootLayout({
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
 
   return (
-    <html lang="ru" className={inter.variable}>
+    <html lang="en" className={inter.variable}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#7c3aed" />
