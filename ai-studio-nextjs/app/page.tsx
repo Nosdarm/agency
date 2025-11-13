@@ -455,26 +455,44 @@ function TestimonialsSection() {
   );
 }
 
-export function buildMailto({ name, email, packageName, message }: { name: string; email: string; packageName: string; message: string }) {
-  const to = "sales@builditfast.ai";
-  const subject = encodeURIComponent(`Specification Request — ${name || "client"}`);
-  const body = encodeURIComponent([
-    `Package: ${packageName || "Not selected"}`,
-    `Name: ${name}`,
-    `Email: ${email}`,
-    "",
-    message,
-  ].join("\n"));
-  return `mailto:${to}?subject=${subject}&body=${body}`;
-}
-
-function useMailto({ name, email, packageName, message }: { name: string; email: string; packageName: string; message: string }) {
-  return useMemo(() => buildMailto({ name, email, packageName, message }), [name, email, packageName, message]);
-}
-
 export default function Landing() {
-  const [form, setForm] = useState({ name: "", email: "", pkg: "MVP Core", message: "Describe your task and desired timeline…" });
-  const mailto = useMailto({ name: form.name, email: form.email, packageName: form.pkg, message: form.message });
+  const [form, setForm] = useState({ name: "", email: "", pkg: "Quick MVP", message: "" });
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setSubmitStatus('loading');
+    setErrorMessage('');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          packageName: form.pkg,
+          message: form.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to send message');
+      }
+
+      setSubmitStatus('success');
+      setForm({ name: "", email: "", pkg: "Quick MVP", message: "" });
+
+      // Reset success message after 5 seconds
+      setTimeout(() => setSubmitStatus('idle'), 5000);
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage(error instanceof Error ? error.message : 'Failed to send message');
+    }
+  };
 
   return (
     <>
@@ -772,10 +790,7 @@ export default function Landing() {
 
               <div className="lg:col-span-3">
                 <form
-                  onSubmit={(e) => {
-                    e.preventDefault();
-                    window.location.href = mailto;
-                  }}
+                  onSubmit={handleSubmit}
                   className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8"
                 >
                   <div className="grid sm:grid-cols-2 gap-4">
@@ -830,9 +845,41 @@ export default function Landing() {
                     />
                   </div>
 
+                  {submitStatus === 'success' && (
+                    <div className="mb-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400">
+                      <div className="flex items-center gap-2">
+                        <CheckCircle2 className="w-5 h-5" />
+                        <span>Message sent successfully! We'll get back to you within 48 hours.</span>
+                      </div>
+                    </div>
+                  )}
+
+                  {submitStatus === 'error' && (
+                    <div className="mb-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400">
+                      <span>Error: {errorMessage}. Please try again or email us directly.</span>
+                    </div>
+                  )}
+
                   <div className="mt-6 flex flex-col sm:flex-row gap-3">
-                    <button type="submit" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg min-h-[48px]`}>
-                      Send Request <ArrowRight className="w-4 h-4" />
+                    <button
+                      type="submit"
+                      disabled={submitStatus === 'loading'}
+                      className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed`}
+                    >
+                      {submitStatus === 'loading' ? (
+                        <>
+                          <motion.div
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                            className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
+                          />
+                          Sending...
+                        </>
+                      ) : (
+                        <>
+                          Send Request <ArrowRight className="w-4 h-4" />
+                        </>
+                      )}
                     </button>
                     <a
                       href="https://calendly.com/"

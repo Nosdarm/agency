@@ -20,7 +20,12 @@
       "Bash(git commit:*)",
       "Bash(del /F \"ai-studio-nextjs\\nul\" 2)",
       "Bash(git rm:*)",
-      "Bash(.gitignore)"
+      "Bash(.gitignore)",
+      "Bash(git checkout:*)",
+      "Bash(git merge:*)",
+      "Bash(git push:*)",
+      "Bash(git stash:*)",
+      "Bash(npx playwright test:*)"
     ],
     "deny": [],
     "ask": []
