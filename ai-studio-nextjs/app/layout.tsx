@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { OrganizationSchema, ServiceSchema, BreadcrumbSchema } from './structured-data';
+import GoogleAnalytics from './components/GoogleAnalytics';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -91,6 +92,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const gaId = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <html lang="ru" className={inter.variable}>
       <head>
@@ -106,6 +109,7 @@ export default function RootLayout({
         <BreadcrumbSchema />
       </head>
       <body className={`${inter.className} antialiased`}>
+        {gaId && <GoogleAnalytics gaId={gaId} />}
         {children}
       </body>
     </html>
