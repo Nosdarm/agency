@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "test": "playwright test",
-    "test:headed": "playwright test --headed",
     "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
     "test:debug": "playwright test --debug",
     "test:report": "playwright show-report"
   },
@@ -29,6 +29,7 @@
     "lucide-react": "^0.553.0",
     "next": "^16.0.1",
     "react": "^19.2.0",
+    "react-countup": "^6.5.3",
     "react-dom": "^19.2.0",
     "typescript": "^5.9.3"
   },

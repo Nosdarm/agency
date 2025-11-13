@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useMemo, useState, useEffect, useRef } from "react";
+import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
 import {
   ArrowRight,
   CalendarDays,
@@ -19,6 +19,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import CountUp from "react-countup";
 import { FAQSchema } from "./structured-data";
 import { AnimatedGridBackground } from "./components/AnimatedGridBackground";
 import { TypedCodeAnimation } from "./components/TypedCodeAnimation";
@@ -88,185 +89,325 @@ function Check({ children }: { children: React.ReactNode }) {
   );
 }
 
+function MagneticButton({
+  children,
+  className,
+  href
+}: {
+  children: React.ReactNode;
+  className: string;
+  href: string;
+}) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const springConfig = { damping: 30, stiffness: 300 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const distanceX = e.clientX - centerX;
+    const distanceY = e.clientY - centerY;
+
+    // Magnetic effect with max distance
+    const maxDistance = 40;
+    const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+    const strength = Math.min(distance / maxDistance, 1);
+
+    x.set(distanceX * strength * 0.3);
+    y.set(distanceY * strength * 0.3);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      className={className}
+      style={{ x: springX, y: springY }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
 function PriceCard({
   name,
   price,
+  timeframe,
   features,
   highlight = false,
   badge,
-  ideal,
+  perfectFor,
 }: {
   name: string;
   price: string;
+  timeframe?: string;
   features: string[];
   highlight?: boolean;
   badge?: string;
-  ideal?: string;
+  perfectFor?: string;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  // Extract numeric value from price string (e.g., "$5,000" -> 5000)
+  const numericPrice = parseInt(price.replace(/[^0-9]/g, '')) || 0;
+
   return (
-    <Card3D className="group">
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onAnimationStart={() => setHasAnimated(true)}
+      className="group relative h-full"
+    >
+      {/* Glow effect on hover */}
+      <motion.div
+        className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 opacity-0 blur-xl transition-opacity duration-500"
+        animate={{ opacity: isHovered ? 0.3 : 0 }}
+      />
+
       <article
-        className={`relative rounded-3xl border ${highlight ? "border-violet-500/50" : "border-white/5"} bg-white/[0.04] backdrop-blur-sm p-6 sm:p-8 flex flex-col shadow-2xl h-full`}
+        className={`relative rounded-3xl border ${
+          highlight ? "border-violet-500/50" : "border-white/5"
+        } bg-white/[0.04] backdrop-blur-sm p-6 sm:p-8 flex flex-col shadow-2xl h-full transition-all duration-300 ${
+          isHovered ? "border-violet-500/30 bg-white/[0.06]" : ""
+        }`}
       >
         {badge && (
-          <div className="absolute -top-3 left-6 text-xs font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow">
+          <motion.div
+            className="absolute -top-3 left-6 text-xs font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow"
+            animate={{
+              scale: [1, 1.05, 1],
+              boxShadow: [
+                "0 0 0 0 rgba(139, 92, 246, 0.4)",
+                "0 0 0 8px rgba(139, 92, 246, 0)",
+                "0 0 0 0 rgba(139, 92, 246, 0)",
+              ],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
             {badge}
-          </div>
+          </motion.div>
         )}
         <h3 className="text-white text-xl font-semibold">{name}</h3>
+        {timeframe && (
+          <div className="mt-2 text-sm text-violet-300">{timeframe}</div>
+        )}
         <div className="mt-4">
-          <span className="text-3xl font-semibold text-white">{price}</span>
+          <span className="text-4xl font-semibold text-white">
+            <CountUp
+              start={0}
+              end={numericPrice}
+              duration={2.5}
+              separator=","
+              prefix="$"
+              useEasing={true}
+              easingFn={(t, b, c, d) => {
+                // easeOutQuad
+                t /= d;
+                return -c * t * (t - 2) + b;
+              }}
+            />
+          </span>
+          <span className="text-neutral-400 ml-2">fixed-price</span>
         </div>
         <ul className="mt-6 space-y-3 flex-1">
           {features.map((f, i) => (
             <Check key={i}>{f}</Check>
           ))}
         </ul>
-        {ideal && <p className="mt-4 text-sm text-violet-300/80 italic">{ideal}</p>}
-        <a
+        {perfectFor && (
+          <div className="mt-4 pt-4 border-t border-white/10">
+            <p className="text-sm text-neutral-400">{perfectFor}</p>
+          </div>
+        )}
+        <MagneticButton
           href="#contact"
-          className={`mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-white shadow ${
+          className={`mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-white shadow transition-all ${
             highlight
-              ? `bg-gradient-to-r ${brand.primary}`
+              ? `bg-gradient-to-r ${brand.primary} hover:shadow-lg hover:shadow-violet-500/50`
               : "bg-neutral-800 hover:bg-neutral-700"
           }`}
         >
           Choose Package <ArrowRight className="w-4 h-4" />
-        </a>
+        </MagneticButton>
       </article>
-    </Card3D>
+    </div>
   );
 }
 
 const features = [
   {
     icon: Code2,
-    title: "SaaS Platforms",
-    desc: "Full-cycle B2B/B2C SaaS development. Multi-tenancy, subscription management & billing, admin panels. Stack: Next.js, Node.js, PostgreSQL, Stripe. Timeline: 3-5 weeks.",
+    title: "Full Development Cycle",
+    desc: "Complete MVP development: design, web, mobile, testing. We use AI to accelerate, but code is written by senior developers.",
   },
   {
     icon: Rocket,
-    title: "Mobile Applications",
-    desc: "Cross-platform iOS & Android development. One codebase, native performance, push notifications, offline mode, App Store/Google Play publishing. Stack: React Native, Expo, Firebase. Timeline: 3-4 weeks.",
+    title: "MVP in 2–4 Weeks",
+    desc: "From $5,000. Backend and frontend templates, ready design system, CI. Weekly demos with real progress.",
   },
   {
     icon: Shield,
-    title: "Web Applications",
-    desc: "Progressive Web Apps and classic web services. Mobile-first responsive design, real-time functionality, SEO optimization, CDN integration. Stack: React, Vue.js, Tailwind CSS, Vercel. Timeline: 2-3 weeks.",
+    title: "Clear Boundaries",
+    desc: "Fixed-price, SOW/DoD, feature freeze. Changes handled through transparent change requests.",
   },
   {
     icon: Gauge,
-    title: "Marketplace & Platforms",
-    desc: "Two-sided platforms and marketplaces. User & vendor portals, payment processing with escrow, ratings & reviews, search & filters. Stack: Next.js, Supabase, Stripe Connect. Timeline: 4-5 weeks.",
+    title: "Production-Ready Products",
+    desc: "Tech stack for your needs: React/Vite, Next.js, FastAPI/NestJS, PostgreSQL, Stripe, Redis.",
+  },
+  {
+    icon: Lock,
+    title: "Security Basics",
+    desc: "Auth, roles, validation, logging. Minimum — JWT/OAuth + industry best practices.",
+  },
+  {
+    icon: Clock,
+    title: "Fast Start",
+    desc: "Specification within 48h after call. Deploy to Vercel/Render/Fly/Hetzner.",
   },
 ];
 
 const packages = [
   {
-    name: "Startup MVP",
-    price: "$7,000",
+    name: "Quick MVP",
+    price: "$5,000",
+    timeframe: "1-2 weeks",
     features: [
-      "Up to 10 key features",
-      "Web OR Mobile (one platform)",
-      "Basic analytics",
-      "2-3 weeks development",
-      "30 days support",
+      "Web application",
+      "Up to 10 screen designs",
+      "Basic authentication",
+      "Deployment",
+      "Source code included",
     ],
-    ideal: "Perfect for: idea validation, first users",
+    perfectFor: "Perfect for: idea validation, first prototype",
   },
   {
-    name: "Scale-Ready Platform",
+    name: "Full MVP",
     price: "$15,000",
+    timeframe: "3-4 weeks",
     badge: "Most Popular",
     features: [
-      "Up to 20 features",
-      "Web + Mobile",
-      "Payments & subscriptions",
-      "Admin panel",
-      "3-5 weeks development",
-      "60 days support",
+      "Web + Mobile (PWA)",
+      "UI/UX design",
+      "Payment system integration",
+      "User dashboard",
+      "Testing & CI/CD",
     ],
+    perfectFor: "Perfect for: market launch, first customers",
     highlight: true,
-    ideal: "Perfect for: quick market entry, fundraising",
   },
   {
-    name: "Enterprise Foundation",
-    price: "$30,000",
+    name: "Advanced MVP",
+    price: "$25,000",
+    timeframe: "5-8 weeks",
     features: [
-      "Unlimited scope",
-      "Multi-platform",
-      "Integrations & API",
-      "Compliance ready",
-      "4-8 weeks",
-      "90 days support",
+      "Web + Native Mobile",
+      "Complete design system",
+      "Admin panel",
+      "API & integrations",
+      "Full testing & DevOps",
     ],
-    ideal: "Perfect for: legacy system replacement, enterprise pilots",
+    perfectFor: "Perfect for: SaaS platforms, marketplaces",
+  },
+];
+
+const whatsIncluded = [
+  { icon: FileText, item: "Design in Figma" },
+  { icon: Code2, item: "Frontend on React/Next.js" },
+  { icon: Code2, item: "Backend on Node.js/Python" },
+  { icon: Shield, item: "PostgreSQL Database" },
+  { icon: CheckCircle2, item: "Testing" },
+  { icon: Rocket, item: "Production deployment" },
+  { icon: Code2, item: "Source code transfer" },
+  { icon: Clock, item: "2 weeks support" },
+];
+
+const projectTimeline = [
+  {
+    week: "Week 1",
+    title: "Design + Backend Foundation",
+    tasks: ["UI/UX design in Figma", "Database schema", "API structure", "Authentication setup"],
+  },
+  {
+    week: "Week 2",
+    title: "Frontend + Integrations",
+    tasks: ["React components", "API integration", "Payment system", "User dashboard"],
+  },
+  {
+    week: "Week 3",
+    title: "Testing + Polish",
+    tasks: ["Unit & integration tests", "Bug fixes", "UI/UX refinement", "Performance optimization"],
+  },
+  {
+    week: "Week 4",
+    title: "Deployment + Launch",
+    tasks: ["Production setup", "CI/CD pipeline", "Documentation", "Handoff & training"],
   },
 ];
 
 const steps = [
   {
     icon: CalendarDays,
-    title: "Week 0: Discovery (2 days)",
-    desc: "Technical interview & requirements analysis. Define MVP scope and priorities. Choose tech stack. Fix price and timeline. Deliverable: Technical specification & Figma prototype.",
+    title: "20–30 min call",
+    desc: "Goals, risks, integrations. Access and limitations.",
   },
-  {
-    icon: FileText,
-    title: "Week 1: Foundation",
-    desc: "Infrastructure setup & CI/CD. Basic architecture & database schema. Authentication & authorization. Core business logic. Deliverable: Working backend & basic UI."
-  },
-  {
-    icon: Code2,
-    title: "Week 2-3: Core Features",
-    desc: "Implement key features. Payment & external service integrations. Unit & integration tests. API documentation. Deliverable: Beta version for testing."
-  },
-  {
-    icon: Rocket,
-    title: "Week 4-5: Polish & Launch",
-    desc: "UI/UX improvements based on feedback. Performance optimization. Security audit. Production deployment. Handover with 30 days free support. Deliverable: Live product & source code."
-  },
+  { icon: FileText, title: "Spec in 48h", desc: "SOW/DoD, timeline, cost, exclusions." },
+  { icon: Search, title: "Weekly demos", desc: "Feedback in short cycles. Feature freeze per specs." },
+  { icon: Rocket, title: "Deploy & handoff", desc: "Documentation, access, 7 days bug fixes." },
 ];
 
 const faqs = [
   {
-    q: "What if I need more features after launch?",
-    a: "We offer post-MVP development in sprints. You can hire us or your own team - the code is fully yours.",
+    q: "How exactly does AI accelerate development?",
+    a: "We generate routine parts (CRUD, test stubs, types, API wrappers). Architecture, security, critical logic and code review remain with experienced engineers.",
   },
   {
-    q: "Can I participate in development?",
-    a: "Absolutely! We work in an open GitHub repository. Weekly calls and constant communication via Slack.",
+    q: "What about security and data privacy?",
+    a: "We avoid uploading sensitive data to external LLMs. For production — validation, authentication, logging, permission controls; optionally — self-hosted LLM or proxy gateway.",
   },
   {
-    q: "What's included in support?",
-    a: "Critical bug fixes, deployment assistance, scaling consultations, minor improvements.",
+    q: "How do you fix project boundaries?",
+    a: "In SOW/DoD: clear screens and flows, unambiguous acceptance criteria. Everything outside — through change request with estimation and timeline.",
   },
   {
-    q: "What quality guarantees do you provide?",
-    a: "Code review by senior developers, 80%+ test coverage, OWASP security standards compliance, performance benchmarks.",
+    q: "Can we start with Paid Discovery?",
+    a: "Yes: 3–5 days, $400–$800. Output — feature map, risks and estimation. Discovery cost is deducted from package when starting.",
   },
 ];
 
 const cases = [
   {
-    title: "Food Delivery Platform",
-    desc: "Local food delivery marketplace. Timeline: 22 days. Results: 500 orders in first month, $50k MRR after 6 months.",
-    chips: ["Next.js", "Node.js", "PostgreSQL", "Stripe"],
-    quote: "Launched faster than competitors and captured the niche",
-    author: "CEO, FoodTech Startup",
+    title: "CRM for SMB network",
+    desc: "Order tracking, roles, reports. Integrations: email + payments.",
+    chips: ["React", "FastAPI", "PostgreSQL", "Stripe"],
   },
   {
-    title: "B2B SaaS for Subscription Management",
-    desc: "Subscription management platform. Timeline: 28 days. Results: 50 paying customers in 3 months.",
-    chips: ["React", "Python FastAPI", "PostgreSQL", "Paddle"],
-    quote: "Code is so clean that we easily hired a team for further development",
-    author: "CTO, SubscriptionTech",
+    title: "SaaS Admin Dashboard",
+    desc: "Key metrics, plan management, report exports.",
+    chips: ["Next.js", "tRPC/NestJS", "Prisma", "Vercel"],
   },
   {
-    title: "Fitness Mobile App",
-    desc: "Mobile fitness application. Timeline: 19 days. Results: 10k downloads, 15% conversion to paid.",
-    chips: ["React Native", "Firebase", "RevenueCat"],
-    quote: "From Figma to App Store in 3 weeks - it was incredible",
-    author: "Founder, FitTech App",
+    title: "AI Support Module",
+    desc: "Ticket summaries and similar search — faster resolution and responses.",
+    chips: ["LLM", "RAG", "Observability"],
   },
 ];
 
@@ -315,8 +456,8 @@ function TestimonialsSection() {
 }
 
 export function buildMailto({ name, email, packageName, message }: { name: string; email: string; packageName: string; message: string }) {
-  const to = "hello@builditfast.ai";
-  const subject = encodeURIComponent(`Project Estimate Request — ${name || "client"}`);
+  const to = "sales@yourstudio.dev";
+  const subject = encodeURIComponent(`Specification Request — ${name || "client"}`);
   const body = encodeURIComponent([
     `Package: ${packageName || "Not selected"}`,
     `Name: ${name}`,
@@ -332,7 +473,7 @@ function useMailto({ name, email, packageName, message }: { name: string; email:
 }
 
 export default function Landing() {
-  const [form, setForm] = useState({ name: "", email: "", pkg: "Startup MVP", message: "Describe your project idea and desired timeline..." });
+  const [form, setForm] = useState({ name: "", email: "", pkg: "MVP Core", message: "Describe your task and desired timeline…" });
   const mailto = useMailto({ name: form.name, email: form.email, packageName: form.pkg, message: form.message });
 
   return (
@@ -351,7 +492,7 @@ export default function Landing() {
           <div className={`${SECTION_CLASSES} h-16 flex items-center justify-between`}>
             <a href="#top" className="inline-flex items-center gap-2">
               <div className={`w-7 h-7 rounded-xl bg-gradient-to-br ${brand.primary}`} />
-              <span className="font-semibold tracking-wide">BuildItFast.ai</span>
+              <span className="font-semibold tracking-wide">AICODE Studio</span>
             </a>
             <nav className="hidden md:flex items-center gap-6 text-sm text-neutral-300" aria-label="Main navigation">
               <a className="hover:text-white transition" href="#features">Features</a>
@@ -366,7 +507,7 @@ export default function Landing() {
               href="#contact"
               className={`hidden md:inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white bg-gradient-to-r ${brand.primary} shadow`}
             >
-              Get Estimate <ArrowRight className="w-4 h-4" />
+              Request Specification <ArrowRight className="w-4 h-4" />
             </a>
           </div>
         </header>
@@ -377,29 +518,27 @@ export default function Landing() {
             <div className="grid lg:grid-cols-2 gap-10 items-center">
               <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
                 <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-violet-300/90 mb-4">
-                  <Sparkles className="w-4 h-4" /> Launch Your MVP in 21 Days
+                  <Sparkles className="w-4 h-4" /> AI-Powered Development
                 </div>
                 <h1 className="text-4xl sm:text-5xl font-semibold text-white leading-tight">
-                  Launch Your MVP in{" "}
-                  <span className={`bg-clip-text text-transparent bg-gradient-to-r ${brand.primary}`}>21 Days</span>
-                  <br />Web • Mobile • SaaS
+                  MVP in 2-4 Weeks from <span className={`bg-clip-text text-transparent bg-gradient-to-r ${brand.primary}`}>$5,000</span>
                 </h1>
                 <p className="mt-5 text-neutral-300 text-lg leading-relaxed">
-                  From technical specification to production-ready product with first users.
-                  Fixed price. Full code ownership. Ready to scale.
+                  Full development cycle: design, web, mobile, testing.
+                  We use AI to accelerate, but code is written by senior developers.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
                   <a href="#contact" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg`}>
-                    Get Project Estimate <ArrowRight className="w-4 h-4" />
+                    Discuss Project <ArrowRight className="w-4 h-4" />
                   </a>
-                  <a href="#cases" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 ${brand.ring}`}>
-                    View Case Studies
+                  <a href="#pricing" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 ${brand.ring}`}>
+                    Pricing & Timeline
                   </a>
                 </div>
                 <ul className="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
-                  <Check>32 MVPs launched</Check>
-                  <Check>Average NPS: 72</Check>
-                  <Check>Idea to first revenue: 45 days</Check>
+                  <Check>Spec in 48 hours</Check>
+                  <Check>Demo every week</Check>
+                  <Check>7 days bug fixes</Check>
                 </ul>
               </motion.div>
 
@@ -414,15 +553,15 @@ export default function Landing() {
             </div>
           </section>
 
-          {/* What We Build */}
+          {/* Features */}
           <section id="features" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="features-heading">
             <SectionTitle
               id="features-heading"
-              kicker="What We Build"
-              title="Focus on Products That Generate Revenue"
-              subtitle="From concept to production-ready product in 21 days. We build web, mobile, and SaaS platforms that scale."
+              kicker="Features"
+              title="AI-Accelerated MVP Development: Speed Without Chaos"
+              subtitle="We use modern AI tools (Cursor, Claude, GitHub Copilot) to accelerate routine component development by 25-40%. Architecture and code review remain with experienced developers."
             />
-            <div className="mt-10 grid md:grid-cols-2 gap-5">
+            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {features.map((f, i) => (
                 <FeatureItem key={i} icon={f.icon} title={f.title} desc={f.desc} />
               ))}
@@ -434,35 +573,147 @@ export default function Landing() {
             <SectionTitle
               id="pricing-heading"
               kicker="Pricing"
-              title="Transparent Pricing"
-              subtitle="Fixed prices for MVP development. No hidden fees or scope changes. All requirements fixed before start."
+              title="MVP Development Cost: Transparent Packages"
+              subtitle="Fixed prices for MVP development for startups. No hidden fees and scope changes. All requirements fixed in SOW before start."
             />
-            <div className="mt-12 grid lg:grid-cols-3 gap-6">
+            <motion.div
+              className="mt-12 grid lg:grid-cols-3 gap-6"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={{
+                visible: {
+                  transition: {
+                    staggerChildren: 0.15,
+                  },
+                },
+              }}
+            >
               {packages.map((p, i) => (
-                <PriceCard key={p.name} name={p.name} price={p.price} features={p.features} highlight={Boolean((p as any).highlight)} badge={(p as any).badge} ideal={(p as any).ideal} />
+                <motion.div
+                  key={p.name}
+                  variants={{
+                    hidden: { opacity: 0, y: 30 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <PriceCard
+                    name={p.name}
+                    price={p.price}
+                    timeframe={(p as any).timeframe}
+                    features={p.features}
+                    highlight={Boolean((p as any).highlight)}
+                    badge={(p as any).badge}
+                    perfectFor={(p as any).perfectFor}
+                  />
+                </motion.div>
+              ))}
+            </motion.div>
+          </section>
+
+          {/* Transparent Pricing */}
+          <section id="transparent-pricing" className={`${SECTION_CLASSES} py-16 sm:py-20 bg-white/[0.02]`} aria-labelledby="transparent-pricing-heading">
+            <SectionTitle
+              id="transparent-pricing-heading"
+              kicker="Transparent Pricing"
+              title="How We Calculate the Price"
+            />
+            <div className="mt-10 max-w-4xl mx-auto">
+              <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center">
+                <div className="inline-flex items-center gap-3 mb-4">
+                  <Zap className={`w-8 h-8 text-violet-400`} />
+                  <span className="text-5xl font-semibold text-white">
+                    <CountUp start={0} end={2500} duration={2} separator="," prefix="$" />
+                  </span>
+                  <span className="text-2xl text-neutral-400">/ week</span>
+                </div>
+                <p className="text-neutral-300 text-lg mb-6">One week of team work</p>
+                <div className="grid md:grid-cols-2 gap-4 text-left">
+                  <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
+                    <h4 className="text-white font-medium mb-2">Team Includes:</h4>
+                    <ul className="space-y-2 text-sm text-neutral-300">
+                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> UI/UX Designer</li>
+                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Frontend Developer</li>
+                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Backend Developer</li>
+                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> QA Engineer</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
+                    <h4 className="text-white font-medium mb-2">Project Examples:</h4>
+                    <ul className="space-y-2 text-sm text-neutral-300">
+                      <li>Simple SaaS: 2 weeks = <strong className="text-white">$5,000</strong></li>
+                      <li>Marketplace: 4 weeks = <strong className="text-white">$10,000</strong></li>
+                      <li>Platform + Mobile: 8 weeks = <strong className="text-white">$20,000</strong></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* What's Included */}
+          <section id="whats-included" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="whats-included-heading">
+            <SectionTitle
+              id="whats-included-heading"
+              kicker="What's Included"
+              title="Every Package Includes"
+              subtitle="Complete development cycle from design to deployment"
+            />
+            <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {whatsIncluded.map((item, i) => (
+                <div key={i} className="rounded-xl border border-white/5 bg-white/[0.03] p-5 flex items-start gap-3">
+                  <div className={`p-2 rounded-lg bg-gradient-to-tr ${brand.primary} text-white/95 shadow flex-shrink-0`}>
+                    <item.icon className="w-4 h-4" />
+                  </div>
+                  <span className="text-neutral-200">{item.item}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Project Timeline */}
+          <section id="project-timeline" className={`${SECTION_CLASSES} py-16 sm:py-20 bg-white/[0.02]`} aria-labelledby="project-timeline-heading">
+            <SectionTitle
+              id="project-timeline-heading"
+              kicker="Project Timeline"
+              title="4-Week Development Process"
+              subtitle="Clear milestones and deliverables every week"
+            />
+            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {projectTimeline.map((phase, i) => (
+                <article key={i} className="rounded-2xl border border-white/5 bg-white/[0.03] p-6 flex flex-col">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-tr from-violet-600 to-fuchsia-600 text-white shadow mb-4">
+                    <span className="text-xl font-bold">{i + 1}</span>
+                  </div>
+                  <div className="text-xs uppercase tracking-wider text-violet-300 mb-2">{phase.week}</div>
+                  <h3 className="text-white font-semibold text-lg mb-3">{phase.title}</h3>
+                  <ul className="space-y-2 text-sm text-neutral-300">
+                    {phase.tasks.map((task, j) => (
+                      <li key={j} className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <span>{task}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
               ))}
             </div>
           </section>
 
           {/* Cases */}
           <section id="cases" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="cases-heading">
-            <SectionTitle id="cases-heading" kicker="Case Studies" title="MVPs That Became Profitable Products" subtitle="Real examples of startups that launched fast and captured their market." />
+            <SectionTitle id="cases-heading" kicker="Cases" title="MVP Development Examples" subtitle="Ready to show live examples and pet projects on a call." />
             <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {cases.map((c) => (
                 <article key={c.title} className="group rounded-2xl border border-white/5 bg-white/5 hover:bg-white/[0.07] transition p-6 flex flex-col">
                   <h3 className="text-white font-medium text-lg">{c.title}</h3>
-                  <p className="text-neutral-300 mt-2 flex-1 text-sm">{c.desc}</p>
+                  <p className="text-neutral-300 mt-2 flex-1">{c.desc}</p>
                   <div className="mt-4 flex flex-wrap gap-2">
                     {c.chips.map((x) => (
                       <Chip key={x}>{x}</Chip>
                     ))}
                   </div>
-                  {(c as any).quote && (
-                    <div className="mt-4 border-l-2 border-violet-500/50 pl-3">
-                      <p className="text-neutral-300 text-sm italic">"{(c as any).quote}"</p>
-                      <p className="text-neutral-400 text-xs mt-1">— {(c as any).author}</p>
-                    </div>
-                  )}
                   <div className="mt-5">
                     <a href="#contact" className="inline-flex items-center gap-2 text-sm text-violet-300 hover:text-violet-200">
                       Discuss Similar <ArrowRight className="w-4 h-4" />
@@ -475,15 +726,15 @@ export default function Landing() {
 
           {/* Process */}
           <section id="process" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="process-heading">
-            <SectionTitle id="process-heading" kicker="Process" title="5 Weeks From Brief to Launch" subtitle="Transparent development process with weekly demos and continuous feedback." />
-            <div className="mt-10 grid md:grid-cols-2 gap-5">
+            <SectionTitle id="process-heading" kicker="Process" title="How MVP Development Works" subtitle="Short call → spec in 48h → weekly demos → deploy." />
+            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
               {steps.map((s, i) => (
                 <article key={s.title} className="rounded-2xl border border-white/5 bg-white/5 p-6 flex flex-col">
                   <div className={`inline-flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-tr ${brand.primary} text-white shadow`}>
                     <s.icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-white font-medium text-lg mt-4">{s.title}</h3>
-                  <p className="text-neutral-300 mt-2 flex-1 text-sm leading-relaxed">{s.desc}</p>
+                  <h3 className="text-white font-medium text-lg mt-4">{i + 1}. {s.title}</h3>
+                  <p className="text-neutral-300 mt-2 flex-1">{s.desc}</p>
                 </article>
               ))}
             </div>
@@ -494,7 +745,7 @@ export default function Landing() {
 
           {/* FAQ */}
           <section id="faq" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="faq-heading">
-            <SectionTitle id="faq-heading" kicker="FAQ" title="Frequently Asked Questions" />
+            <SectionTitle id="faq-heading" kicker="FAQ" title="Frequently Asked Questions About MVP Development" />
             <div className="mt-10 grid md:grid-cols-2 gap-6">
               {faqs.map((f) => (
                 <details key={f.q} className="group rounded-xl border border-white/10 bg-white/[0.03] p-5 open:bg-white/[0.05]">
@@ -512,10 +763,10 @@ export default function Landing() {
           <section id="contact" className={`${SECTION_CLASSES} py-16 sm:py-24`} aria-labelledby="contact-heading">
             <div className="grid lg:grid-cols-5 gap-8">
               <div className="lg:col-span-2">
-                <SectionTitle id="contact-heading" kicker="Contact" title="Ready to Discuss Your Project?" subtitle="Leave your details and brief description — we'll respond with a detailed estimate within 48 hours." />
+                <SectionTitle id="contact-heading" kicker="Contact" title="Request Free Specification" subtitle="Leave your contacts and brief description — we'll return with SOW/DoD within 48 hours." />
                 <div className="mt-8 space-y-4 text-neutral-300">
-                  <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-violet-300"/> hello@builditfast.ai</div>
-                  <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-violet-300"/> Telegram: @builditfast</div>
+                  <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-violet-300"/> Quick call: 20–30 minutes</div>
+                  <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-violet-300"/> sales@yourstudio.dev</div>
                 </div>
               </div>
 
@@ -581,10 +832,10 @@ export default function Landing() {
 
                   <div className="mt-6 flex flex-col sm:flex-row gap-3">
                     <button type="submit" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg min-h-[48px]`}>
-                      Get Project Estimate <ArrowRight className="w-4 h-4" />
+                      Send Request <ArrowRight className="w-4 h-4" />
                     </button>
                     <a
-                      href="https://calendly.com/builditfast"
+                      href="https://calendly.com/"
                       target="_blank"
                       rel="noreferrer noopener"
                       className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 min-h-[48px]"
@@ -603,7 +854,7 @@ export default function Landing() {
           <div className={`${SECTION_CLASSES} py-10 flex flex-col sm:flex-row items-center justify-between gap-6`}>
             <div className="flex items-center gap-2">
               <div className={`w-6 h-6 rounded-lg bg-gradient-to-br ${brand.primary}`} />
-              <span className="text-sm text-neutral-300">© {new Date().getFullYear()} BuildItFast.ai. All rights reserved.</span>
+              <span className="text-sm text-neutral-300">© {new Date().getFullYear()} AICODE Studio. All rights reserved.</span>
             </div>
             <div className="flex items-center gap-5 text-sm">
               <a href="#" className="text-neutral-300 hover:text-white">Privacy Policy</a>
