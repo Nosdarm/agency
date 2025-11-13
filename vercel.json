@@ -1,3 +1,7 @@
 {
-  "version": 2
+  "version": 2,
+  "buildCommand": "cd ai-studio-nextjs && npm run build",
+  "devCommand": "cd ai-studio-nextjs && npm run dev",
+  "installCommand": "cd ai-studio-nextjs && npm install",
+  "outputDirectory": "ai-studio-nextjs/.next"
 }
