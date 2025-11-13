@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useMemo, useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import React, { useMemo, useState, useEffect, useRef } from "react";
+import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
 import {
   ArrowRight,
   CalendarDays,
@@ -19,6 +19,7 @@ import {
   Sparkles,
   Zap,
 } from "lucide-react";
+import CountUp from "react-countup";
 import { FAQSchema } from "./structured-data";
 import { AnimatedGridBackground } from "./components/AnimatedGridBackground";
 import { TypedCodeAnimation } from "./components/TypedCodeAnimation";
@@ -88,6 +89,59 @@ function Check({ children }: { children: React.ReactNode }) {
   );
 }
 
+function MagneticButton({
+  children,
+  className,
+  href
+}: {
+  children: React.ReactNode;
+  className: string;
+  href: string;
+}) {
+  const ref = useRef<HTMLAnchorElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const springConfig = { damping: 30, stiffness: 300 };
+  const springX = useSpring(x, springConfig);
+  const springY = useSpring(y, springConfig);
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (!ref.current) return;
+    const rect = ref.current.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    const distanceX = e.clientX - centerX;
+    const distanceY = e.clientY - centerY;
+
+    // Magnetic effect with max distance
+    const maxDistance = 40;
+    const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
+    const strength = Math.min(distance / maxDistance, 1);
+
+    x.set(distanceX * strength * 0.3);
+    y.set(distanceY * strength * 0.3);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      className={className}
+      style={{ x: springX, y: springY }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      {children}
+    </motion.a>
+  );
+}
+
 function PriceCard({
   name,
   price,
@@ -101,19 +155,69 @@ function PriceCard({
   highlight?: boolean;
   badge?: string;
 }) {
+  const [isHovered, setIsHovered] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+
+  // Extract numeric value from price string (e.g., "$5,900" -> 5900)
+  const numericPrice = parseInt(price.replace(/[^0-9]/g, '')) || 0;
+
   return (
-    <Card3D className="group">
+    <div
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onAnimationStart={() => setHasAnimated(true)}
+      className="group relative h-full"
+    >
+      {/* Glow effect on hover */}
+      <motion.div
+        className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 opacity-0 blur-xl transition-opacity duration-500"
+        animate={{ opacity: isHovered ? 0.3 : 0 }}
+      />
+
       <article
-        className={`relative rounded-3xl border ${highlight ? "border-violet-500/50" : "border-white/5"} bg-white/[0.04] backdrop-blur-sm p-6 sm:p-8 flex flex-col shadow-2xl h-full`}
+        className={`relative rounded-3xl border ${
+          highlight ? "border-violet-500/50" : "border-white/5"
+        } bg-white/[0.04] backdrop-blur-sm p-6 sm:p-8 flex flex-col shadow-2xl h-full transition-all duration-300 ${
+          isHovered ? "border-violet-500/30 bg-white/[0.06]" : ""
+        }`}
       >
         {badge && (
-          <div className="absolute -top-3 left-6 text-xs font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow">
+          <motion.div
+            className="absolute -top-3 left-6 text-xs font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow"
+            animate={{
+              scale: [1, 1.05, 1],
+              boxShadow: [
+                "0 0 0 0 rgba(139, 92, 246, 0.4)",
+                "0 0 0 8px rgba(139, 92, 246, 0)",
+                "0 0 0 0 rgba(139, 92, 246, 0)",
+              ],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          >
             {badge}
-          </div>
+          </motion.div>
         )}
         <h3 className="text-white text-xl font-semibold">{name}</h3>
         <div className="mt-4">
-          <span className="text-4xl font-semibold text-white">{price}</span>
+          <span className="text-4xl font-semibold text-white">
+            <CountUp
+              start={0}
+              end={numericPrice}
+              duration={2.5}
+              separator=","
+              prefix="$"
+              useEasing={true}
+              easingFn={(t, b, c, d) => {
+                // easeOutQuad
+                t /= d;
+                return -c * t * (t - 2) + b;
+              }}
+            />
+          </span>
           <span className="text-neutral-400 ml-2">fixed-price</span>
         </div>
         <ul className="mt-6 space-y-3">
@@ -121,18 +225,18 @@ function PriceCard({
             <Check key={i}>{f}</Check>
           ))}
         </ul>
-        <a
+        <MagneticButton
           href="#contact"
-          className={`mt-8 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-white shadow ${
+          className={`mt-8 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-white shadow transition-all ${
             highlight
-              ? `bg-gradient-to-r ${brand.primary}`
+              ? `bg-gradient-to-r ${brand.primary} hover:shadow-lg hover:shadow-violet-500/50`
               : "bg-neutral-800 hover:bg-neutral-700"
           }`}
         >
           Choose Package <ArrowRight className="w-4 h-4" />
-        </a>
+        </MagneticButton>
       </article>
-    </Card3D>
+    </div>
   );
 }
 
@@ -419,11 +523,32 @@ export default function Landing() {
               title="MVP Development Cost: Transparent Packages"
               subtitle="Fixed prices for MVP development for startups. No hidden fees and scope changes. All requirements fixed in SOW before start."
             />
-            <div className="mt-12 grid lg:grid-cols-3 gap-6">
+            <motion.div
+              className="mt-12 grid lg:grid-cols-3 gap-6"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, margin: "-100px" }}
+              variants={{
+                visible: {
+                  transition: {
+                    staggerChildren: 0.15,
+                  },
+                },
+              }}
+            >
               {packages.map((p, i) => (
-                <PriceCard key={p.name} name={p.name} price={p.price} features={p.features} highlight={Boolean((p as any).highlight)} badge={(p as any).badge} />
+                <motion.div
+                  key={p.name}
+                  variants={{
+                    hidden: { opacity: 0, y: 30 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <PriceCard name={p.name} price={p.price} features={p.features} highlight={Boolean((p as any).highlight)} badge={(p as any).badge} />
+                </motion.div>
               ))}
-            </div>
+            </motion.div>
           </section>
 
           {/* Cases */}
