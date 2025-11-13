@@ -6,25 +6,31 @@ export function OrganizationSchema() {
         __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "AICODE Studio",
-          "url": "https://yourstudio.dev",
-          "logo": "https://yourstudio.dev/logo.png",
-          "description": "Разработка MVP с AI-ускорением для стартапов. Фикс-прайс от $5,900, сроки 3-5 недель",
+          "name": "BuildItFast",
+          "url": "https://builditfast.ai",
+          "logo": "https://builditfast.ai/logo.png",
+          "description": "AI-powered MVP development in 1-2 weeks",
           "address": {
             "@type": "PostalAddress",
-            "addressCountry": "UA",
-            "addressRegion": "Kharkiv"
+            "addressCountry": "Ukraine"
           },
           "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "Sales",
-            "email": "sales@yourstudio.dev",
-            "availableLanguage": ["Russian", "English", "Ukrainian"]
+            "email": "sales@builditfast.ai",
+            "availableLanguage": ["English"]
           },
           "sameAs": [
-            "https://linkedin.com/company/yourstudio",
-            "https://github.com/yourstudio"
-          ]
+            "https://twitter.com/builditfast",
+            "https://linkedin.com/company/builditfast"
+          ],
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "USD",
+            "lowPrice": "5000",
+            "highPrice": "25000",
+            "offerCount": "3"
+          }
         })
       }}
     />
@@ -42,7 +48,7 @@ export function ServiceSchema() {
           "serviceType": "MVP Development",
           "provider": {
             "@type": "Organization",
-            "name": "AICODE Studio"
+            "name": "BuildItFast"
           },
           "areaServed": {
             "@type": "Country",
@@ -56,30 +62,30 @@ export function ServiceSchema() {
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "MVP Core",
-                  "description": "Базовая разработка MVP с аутентификацией и 3-5 CRUD сущностями"
+                  "name": "Quick MVP",
+                  "description": "Web application with up to 10 screen designs, basic authentication, and deployment. Perfect for idea validation."
                 },
-                "price": "5900",
+                "price": "5000",
                 "priceCurrency": "USD"
               },
               {
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "MVP Plus",
-                  "description": "Расширенный пакет MVP с дополнительными интеграциями"
+                  "name": "Full MVP",
+                  "description": "Web + Mobile (PWA) with UI/UX design, payment system, user dashboard, testing, and CI/CD. Perfect for market launch."
                 },
-                "price": "7900",
+                "price": "15000",
                 "priceCurrency": "USD"
               },
               {
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "AI Booster",
-                  "description": "LLM-фича в существующий продукт с чатом, саммари и кластеризацией"
+                  "name": "Advanced MVP",
+                  "description": "Web + Native Mobile with complete design system, admin panel, API integrations, full testing, and DevOps. Perfect for SaaS platforms."
                 },
-                "price": "3000",
+                "price": "25000",
                 "priceCurrency": "USD"
               }
             ]
@@ -124,16 +130,36 @@ export function BreadcrumbSchema() {
             {
               "@type": "ListItem",
               "position": 1,
-              "name": "Главная",
-              "item": "https://yourstudio.dev"
+              "name": "Home",
+              "item": "https://builditfast.ai"
             },
             {
               "@type": "ListItem",
               "position": 2,
-              "name": "Разработка MVP",
-              "item": "https://yourstudio.dev/#pricing"
+              "name": "MVP Development",
+              "item": "https://builditfast.ai/#pricing"
             }
           ]
+        })
+      }}
+    />
+  );
+}
+
+export function LocalBusinessSchema() {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "http://schema.org",
+          "@type": "LocalBusiness",
+          "name": "BuildItFast",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "Ukraine"
+          },
+          "priceRange": "$5,000 - $25,000"
         })
       }}
     />

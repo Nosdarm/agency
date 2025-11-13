@@ -456,7 +456,7 @@ function TestimonialsSection() {
 }
 
 export function buildMailto({ name, email, packageName, message }: { name: string; email: string; packageName: string; message: string }) {
-  const to = "sales@yourstudio.dev";
+  const to = "sales@builditfast.ai";
   const subject = encodeURIComponent(`Specification Request — ${name || "client"}`);
   const body = encodeURIComponent([
     `Package: ${packageName || "Not selected"}`,
@@ -492,7 +492,7 @@ export default function Landing() {
           <div className={`${SECTION_CLASSES} h-16 flex items-center justify-between`}>
             <a href="#top" className="inline-flex items-center gap-2">
               <div className={`w-7 h-7 rounded-xl bg-gradient-to-br ${brand.primary}`} />
-              <span className="font-semibold tracking-wide">AICODE Studio</span>
+              <span className="font-semibold tracking-wide">BuildItFast</span>
             </a>
             <nav className="hidden md:flex items-center gap-6 text-sm text-neutral-300" aria-label="Main navigation">
               <a className="hover:text-white transition" href="#features">Features</a>
@@ -766,7 +766,7 @@ export default function Landing() {
                 <SectionTitle id="contact-heading" kicker="Contact" title="Request Free Specification" subtitle="Leave your contacts and brief description — we'll return with SOW/DoD within 48 hours." />
                 <div className="mt-8 space-y-4 text-neutral-300">
                   <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-violet-300"/> Quick call: 20–30 minutes</div>
-                  <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-violet-300"/> sales@yourstudio.dev</div>
+                  <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-violet-300"/> sales@builditfast.ai</div>
                 </div>
               </div>
 
@@ -854,7 +854,7 @@ export default function Landing() {
           <div className={`${SECTION_CLASSES} py-10 flex flex-col sm:flex-row items-center justify-between gap-6`}>
             <div className="flex items-center gap-2">
               <div className={`w-6 h-6 rounded-lg bg-gradient-to-br ${brand.primary}`} />
-              <span className="text-sm text-neutral-300">© {new Date().getFullYear()} AICODE Studio. All rights reserved.</span>
+              <span className="text-sm text-neutral-300">© {new Date().getFullYear()} BuildItFast. All rights reserved.</span>
             </div>
             <div className="flex items-center gap-5 text-sm">
               <a href="#" className="text-neutral-300 hover:text-white">Privacy Policy</a>

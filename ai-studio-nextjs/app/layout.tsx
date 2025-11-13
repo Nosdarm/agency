@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { OrganizationSchema, ServiceSchema, BreadcrumbSchema } from './structured-data';
+import { OrganizationSchema, ServiceSchema, BreadcrumbSchema, LocalBusinessSchema } from './structured-data';
+import { GoogleAnalytics } from './analytics';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -11,30 +12,28 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://yourstudio.dev'),
-  title: 'AI Studio | MVP разработка за 3-5 недель | React, FastAPI, PostgreSQL',
-  description: 'Разработка MVP с AI-ускорением от $5,900. Фикс-прайс, прозрачные сроки, еженедельные демо. Next.js, React, FastAPI, PostgreSQL. Работаем с B2B SaaS стартапами из США, Европы и Украины.',
+  metadataBase: new URL('https://builditfast.ai'),
+  title: 'MVP Development in 1-2 Weeks from $5,000 | AI-Powered | BuildItFast',
+  description: 'Launch your MVP in 7-14 days. AI-accelerated development reduces costs by 70%. Web, mobile, SaaS platforms. Fixed price, full code ownership. Get started today.',
   keywords: [
-    'разработка mvp',
-    'ai разработка',
-    'mvp за 5 недель',
-    'стартап разработка',
-    'react разработка',
-    'fastapi разработка',
-    'фикс прайс разработка',
-    'аутсорс разработка украина',
-    'разработка mvp для стартапа',
-    'заказать разработку mvp',
-    'mvp разработка стоимость',
-    'разработка mvp цена',
-    'b2b saas разработка',
-    'next.js разработка',
-    'postgresql разработка',
-    'разработка mvp украина'
+    'mvp development',
+    'mvp development services',
+    'mvp development company',
+    'ai mvp development',
+    'fast mvp development',
+    'mvp development in 2 weeks',
+    '$5000 mvp development',
+    'ai powered mvp development',
+    'mvp development for startups',
+    'cheap mvp development services',
+    'build mvp fast',
+    'startup mvp',
+    'mvp services',
+    '2 week mvp'
   ],
-  authors: [{ name: 'AICODE Studio', url: 'https://yourstudio.dev' }],
-  creator: 'AICODE Studio',
-  publisher: 'AICODE Studio',
+  authors: [{ name: 'BuildItFast', url: 'https://builditfast.ai' }],
+  creator: 'BuildItFast',
+  publisher: 'BuildItFast',
   formatDetection: {
     email: false,
     address: false,
@@ -42,27 +41,27 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: 'website',
-    locale: 'ru_RU',
-    url: 'https://yourstudio.dev',
-    siteName: 'AICODE Studio',
-    title: 'AI Studio | MVP разработка за 3-5 недель',
-    description: 'Разработка MVP с AI-ускорением от $5,900. Фикс-прайс, прозрачные сроки, еженедельные демо. React, FastAPI, PostgreSQL.',
+    locale: 'en_US',
+    url: 'https://builditfast.ai',
+    siteName: 'BuildItFast',
+    title: 'Launch Your MVP in 2 Weeks | BuildItFast.ai',
+    description: 'AI + Senior Developers = 70% faster MVP development. From $5,000, fixed price.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'AICODE Studio - Разработка MVP с AI-ускорением',
+        alt: 'BuildItFast - AI-Powered MVP Development',
         type: 'image/jpeg',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'AI Studio | MVP разработка за 3-5 недель',
-    description: 'Разработка MVP с AI-ускорением от $5,900. Фикс-прайс, прозрачные сроки.',
+    title: 'MVP in 2 Weeks from $5k | BuildItFast',
+    description: 'AI-powered MVP development. 3x faster, 70% cheaper.',
     images: ['/og-image.jpg'],
-    creator: '@yourstudio',
+    creator: '@builditfast',
   },
   robots: {
     index: true,
@@ -77,11 +76,10 @@ export const metadata: Metadata = {
     },
   },
   alternates: {
-    canonical: 'https://yourstudio.dev',
+    canonical: 'https://builditfast.ai',
   },
   verification: {
     google: 'YOUR_GOOGLE_VERIFICATION_CODE',
-    yandex: 'YOUR_YANDEX_VERIFICATION_CODE',
   },
   category: 'technology',
 };
@@ -92,7 +90,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru" className={inter.variable}>
+    <html lang="en" className={inter.variable}>
       <head>
         <link rel="icon" href="/favicon.ico" sizes="any" />
         <link rel="icon" href="/icon.svg" type="image/svg+xml" />
@@ -104,8 +102,10 @@ export default function RootLayout({
         <OrganizationSchema />
         <ServiceSchema />
         <BreadcrumbSchema />
+        <LocalBusinessSchema />
       </head>
       <body className={`${inter.className} antialiased`}>
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
         {children}
       </body>
     </html>

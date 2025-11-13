@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://yourstudio.dev';
+  const baseUrl = 'https://builditfast.ai';
   const currentDate = new Date();
 
   return [
