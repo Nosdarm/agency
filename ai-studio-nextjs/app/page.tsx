@@ -145,20 +145,24 @@ function MagneticButton({
 function PriceCard({
   name,
   price,
+  timeframe,
   features,
   highlight = false,
   badge,
+  perfectFor,
 }: {
   name: string;
   price: string;
+  timeframe?: string;
   features: string[];
   highlight?: boolean;
   badge?: string;
+  perfectFor?: string;
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
 
-  // Extract numeric value from price string (e.g., "$5,900" -> 5900)
+  // Extract numeric value from price string (e.g., "$5,000" -> 5000)
   const numericPrice = parseInt(price.replace(/[^0-9]/g, '')) || 0;
 
   return (
@@ -202,6 +206,9 @@ function PriceCard({
           </motion.div>
         )}
         <h3 className="text-white text-xl font-semibold">{name}</h3>
+        {timeframe && (
+          <div className="mt-2 text-sm text-violet-300">{timeframe}</div>
+        )}
         <div className="mt-4">
           <span className="text-4xl font-semibold text-white">
             <CountUp
@@ -220,14 +227,19 @@ function PriceCard({
           </span>
           <span className="text-neutral-400 ml-2">fixed-price</span>
         </div>
-        <ul className="mt-6 space-y-3">
+        <ul className="mt-6 space-y-3 flex-1">
           {features.map((f, i) => (
             <Check key={i}>{f}</Check>
           ))}
         </ul>
+        {perfectFor && (
+          <div className="mt-4 pt-4 border-t border-white/10">
+            <p className="text-sm text-neutral-400">{perfectFor}</p>
+          </div>
+        )}
         <MagneticButton
           href="#contact"
-          className={`mt-8 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-white shadow transition-all ${
+          className={`mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-white shadow transition-all ${
             highlight
               ? `bg-gradient-to-r ${brand.primary} hover:shadow-lg hover:shadow-violet-500/50`
               : "bg-neutral-800 hover:bg-neutral-700"
@@ -243,13 +255,13 @@ function PriceCard({
 const features = [
   {
     icon: Code2,
-    title: "AI-Accelerated Development",
-    desc: "We generate routine layers (CRUD, types, tests), leaving architecture and review to experienced engineers.",
+    title: "Full Development Cycle",
+    desc: "Complete MVP development: design, web, mobile, testing. We use AI to accelerate, but code is written by senior developers.",
   },
   {
     icon: Rocket,
-    title: "MVP in 3–5 Weeks",
-    desc: "Backend and frontend templates, ready design system, CI. Weekly demos with real progress.",
+    title: "MVP in 2–4 Weeks",
+    desc: "From $5,000. Backend and frontend templates, ready design system, CI. Weekly demos with real progress.",
   },
   {
     icon: Shield,
@@ -275,37 +287,79 @@ const features = [
 
 const packages = [
   {
-    name: "MVP Core",
-    price: "$5,900",
+    name: "Quick MVP",
+    price: "$5,000",
+    timeframe: "1-2 weeks",
     features: [
-      "Authentication & user roles",
-      "3–5 CRUD entities",
-      "1 dashboard/report",
-      "1 integration (Stripe/SMTP)",
-      "Deploy + 7 days bug fixes",
+      "Web application",
+      "Up to 10 screen designs",
+      "Basic authentication",
+      "Deployment",
+      "Source code included",
     ],
+    perfectFor: "Perfect for: idea validation, first prototype",
   },
   {
-    name: "MVP Plus",
-    price: "$7,900",
+    name: "Full MVP",
+    price: "$15,000",
+    timeframe: "3-4 weeks",
     badge: "Most Popular",
     features: [
-      "Everything from Core",
-      "Additional integrations (2x)",
-      "Email/Push + basic analytics",
-      "UAT week + extra revisions",
+      "Web + Mobile (PWA)",
+      "UI/UX design",
+      "Payment system integration",
+      "User dashboard",
+      "Testing & CI/CD",
     ],
+    perfectFor: "Perfect for: market launch, first customers",
     highlight: true,
   },
   {
-    name: "AI Booster",
-    price: "$3,000",
+    name: "Advanced MVP",
+    price: "$25,000",
+    timeframe: "5-8 weeks",
     features: [
-      "LLM feature for existing product",
-      "Chat/summary/clustering",
-      "Secure prompts & tracing",
-      "Integration documentation",
+      "Web + Native Mobile",
+      "Complete design system",
+      "Admin panel",
+      "API & integrations",
+      "Full testing & DevOps",
     ],
+    perfectFor: "Perfect for: SaaS platforms, marketplaces",
+  },
+];
+
+const whatsIncluded = [
+  { icon: FileText, item: "Design in Figma" },
+  { icon: Code2, item: "Frontend on React/Next.js" },
+  { icon: Code2, item: "Backend on Node.js/Python" },
+  { icon: Shield, item: "PostgreSQL Database" },
+  { icon: CheckCircle2, item: "Testing" },
+  { icon: Rocket, item: "Production deployment" },
+  { icon: Code2, item: "Source code transfer" },
+  { icon: Clock, item: "2 weeks support" },
+];
+
+const projectTimeline = [
+  {
+    week: "Week 1",
+    title: "Design + Backend Foundation",
+    tasks: ["UI/UX design in Figma", "Database schema", "API structure", "Authentication setup"],
+  },
+  {
+    week: "Week 2",
+    title: "Frontend + Integrations",
+    tasks: ["React components", "API integration", "Payment system", "User dashboard"],
+  },
+  {
+    week: "Week 3",
+    title: "Testing + Polish",
+    tasks: ["Unit & integration tests", "Bug fixes", "UI/UX refinement", "Performance optimization"],
+  },
+  {
+    week: "Week 4",
+    title: "Deployment + Launch",
+    tasks: ["Production setup", "CI/CD pipeline", "Documentation", "Handoff & training"],
   },
 ];
 
@@ -467,12 +521,11 @@ export default function Landing() {
                   <Sparkles className="w-4 h-4" /> AI-Powered Development
                 </div>
                 <h1 className="text-4xl sm:text-5xl font-semibold text-white leading-tight">
-                  MVP Development for Startups with AI Acceleration{" "}
-                  <span className={`bg-clip-text text-transparent bg-gradient-to-r ${brand.primary}`}>in 3–5 Weeks</span>
+                  MVP in 2-4 Weeks from <span className={`bg-clip-text text-transparent bg-gradient-to-r ${brand.primary}`}>$5,000</span>
                 </h1>
                 <p className="mt-5 text-neutral-300 text-lg leading-relaxed">
-                  From <strong>$5,900 fixed-price</strong>. Professional MVP development with React, Next.js and FastAPI.
-                  Transparent timelines, weekly demos. We work with B2B SaaS startups from USA, Europe and Ukraine.
+                  Full development cycle: design, web, mobile, testing.
+                  We use AI to accelerate, but code is written by senior developers.
                 </p>
                 <div className="mt-8 flex flex-col sm:flex-row gap-3">
                   <a href="#contact" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg`}>
@@ -545,10 +598,107 @@ export default function Landing() {
                   }}
                   transition={{ duration: 0.5 }}
                 >
-                  <PriceCard name={p.name} price={p.price} features={p.features} highlight={Boolean((p as any).highlight)} badge={(p as any).badge} />
+                  <PriceCard
+                    name={p.name}
+                    price={p.price}
+                    timeframe={(p as any).timeframe}
+                    features={p.features}
+                    highlight={Boolean((p as any).highlight)}
+                    badge={(p as any).badge}
+                    perfectFor={(p as any).perfectFor}
+                  />
                 </motion.div>
               ))}
             </motion.div>
+          </section>
+
+          {/* Transparent Pricing */}
+          <section id="transparent-pricing" className={`${SECTION_CLASSES} py-16 sm:py-20 bg-white/[0.02]`} aria-labelledby="transparent-pricing-heading">
+            <SectionTitle
+              id="transparent-pricing-heading"
+              kicker="Transparent Pricing"
+              title="How We Calculate the Price"
+            />
+            <div className="mt-10 max-w-4xl mx-auto">
+              <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center">
+                <div className="inline-flex items-center gap-3 mb-4">
+                  <Zap className={`w-8 h-8 text-violet-400`} />
+                  <span className="text-5xl font-semibold text-white">
+                    <CountUp start={0} end={2500} duration={2} separator="," prefix="$" />
+                  </span>
+                  <span className="text-2xl text-neutral-400">/ week</span>
+                </div>
+                <p className="text-neutral-300 text-lg mb-6">One week of team work</p>
+                <div className="grid md:grid-cols-2 gap-4 text-left">
+                  <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
+                    <h4 className="text-white font-medium mb-2">Team Includes:</h4>
+                    <ul className="space-y-2 text-sm text-neutral-300">
+                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> UI/UX Designer</li>
+                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Frontend Developer</li>
+                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Backend Developer</li>
+                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> QA Engineer</li>
+                    </ul>
+                  </div>
+                  <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
+                    <h4 className="text-white font-medium mb-2">Project Examples:</h4>
+                    <ul className="space-y-2 text-sm text-neutral-300">
+                      <li>Simple SaaS: 2 weeks = <strong className="text-white">$5,000</strong></li>
+                      <li>Marketplace: 4 weeks = <strong className="text-white">$10,000</strong></li>
+                      <li>Platform + Mobile: 8 weeks = <strong className="text-white">$20,000</strong></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          {/* What's Included */}
+          <section id="whats-included" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="whats-included-heading">
+            <SectionTitle
+              id="whats-included-heading"
+              kicker="What's Included"
+              title="Every Package Includes"
+              subtitle="Complete development cycle from design to deployment"
+            />
+            <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {whatsIncluded.map((item, i) => (
+                <div key={i} className="rounded-xl border border-white/5 bg-white/[0.03] p-5 flex items-start gap-3">
+                  <div className={`p-2 rounded-lg bg-gradient-to-tr ${brand.primary} text-white/95 shadow flex-shrink-0`}>
+                    <item.icon className="w-4 h-4" />
+                  </div>
+                  <span className="text-neutral-200">{item.item}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Project Timeline */}
+          <section id="project-timeline" className={`${SECTION_CLASSES} py-16 sm:py-20 bg-white/[0.02]`} aria-labelledby="project-timeline-heading">
+            <SectionTitle
+              id="project-timeline-heading"
+              kicker="Project Timeline"
+              title="4-Week Development Process"
+              subtitle="Clear milestones and deliverables every week"
+            />
+            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+              {projectTimeline.map((phase, i) => (
+                <article key={i} className="rounded-2xl border border-white/5 bg-white/[0.03] p-6 flex flex-col">
+                  <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-tr from-violet-600 to-fuchsia-600 text-white shadow mb-4">
+                    <span className="text-xl font-bold">{i + 1}</span>
+                  </div>
+                  <div className="text-xs uppercase tracking-wider text-violet-300 mb-2">{phase.week}</div>
+                  <h3 className="text-white font-semibold text-lg mb-3">{phase.title}</h3>
+                  <ul className="space-y-2 text-sm text-neutral-300">
+                    {phase.tasks.map((task, j) => (
+                      <li key={j} className="flex items-start gap-2">
+                        <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0" />
+                        <span>{task}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
           </section>
 
           {/* Cases */}
