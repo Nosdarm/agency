@@ -54,7 +54,7 @@ export function ServiceSchema() {
                   "name": "Startup MVP",
                   "description": "Up to 10 key features, Web OR Mobile, basic analytics, 2-3 weeks development, 30 days support"
                 },
-                "priceRange": "$15000-$25000",
+                "price": "7000",
                 "priceCurrency": "USD"
               },
               {
@@ -64,7 +64,7 @@ export function ServiceSchema() {
                   "name": "Scale-Ready Platform",
                   "description": "Up to 20 features, Web + Mobile, payments & subscriptions, admin panel, 3-5 weeks development, 60 days support"
                 },
-                "priceRange": "$25000-$45000",
+                "price": "15000",
                 "priceCurrency": "USD"
               },
               {
@@ -74,7 +74,7 @@ export function ServiceSchema() {
                   "name": "Enterprise Foundation",
                   "description": "Unlimited scope, multi-platform, integrations & API, compliance ready, 4-8 weeks, 90 days support"
                 },
-                "price": "45000",
+                "price": "30000",
                 "priceCurrency": "USD"
               }
             ]

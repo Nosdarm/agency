@@ -164,7 +164,7 @@ const features = [
 const packages = [
   {
     name: "Startup MVP",
-    price: "$15,000 - $25,000",
+    price: "$7,000",
     features: [
       "Up to 10 key features",
       "Web OR Mobile (one platform)",
@@ -176,7 +176,7 @@ const packages = [
   },
   {
     name: "Scale-Ready Platform",
-    price: "$25,000 - $45,000",
+    price: "$15,000",
     badge: "Most Popular",
     features: [
       "Up to 20 features",
@@ -191,7 +191,7 @@ const packages = [
   },
   {
     name: "Enterprise Foundation",
-    price: "$45,000+",
+    price: "$30,000",
     features: [
       "Unlimited scope",
       "Multi-platform",
