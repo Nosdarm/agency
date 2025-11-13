@@ -3,11 +3,10 @@
 import { useEffect } from 'react';
 import Script from 'next/script';
 
-declare global {
-  interface Window {
-    gtag: (...args: any[]) => void;
-    dataLayer: any[];
-  }
+// Extend Window interface for Google Analytics
+interface GtagWindow extends Window {
+  gtag?: (...args: any[]) => void;
+  dataLayer?: any[];
 }
 
 export function GoogleAnalytics({ gaId }: { gaId: string }) {
@@ -37,8 +36,9 @@ export function GoogleAnalytics({ gaId }: { gaId: string }) {
 
 // Track pricing view event
 export function trackPricingView() {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'view_pricing', {
+  const win = window as GtagWindow;
+  if (typeof window !== 'undefined' && win.gtag) {
+    win.gtag('event', 'view_pricing', {
       event_category: 'engagement',
       event_label: 'pricing_section'
     });
@@ -47,8 +47,9 @@ export function trackPricingView() {
 
 // Track package selection
 export function trackPackageSelect(packageName: string, price: number) {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'begin_checkout', {
+  const win = window as GtagWindow;
+  if (typeof window !== 'undefined' && win.gtag) {
+    win.gtag('event', 'begin_checkout', {
       value: price,
       currency: 'USD',
       items: [{
@@ -61,8 +62,9 @@ export function trackPackageSelect(packageName: string, price: number) {
 
 // Track contact form submission
 export function trackContactForm(packageName: string) {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'contact_form_submit', {
+  const win = window as GtagWindow;
+  if (typeof window !== 'undefined' && win.gtag) {
+    win.gtag('event', 'contact_form_submit', {
       event_category: 'lead',
       package_interest: packageName
     });
@@ -71,8 +73,9 @@ export function trackContactForm(packageName: string) {
 
 // Track scroll depth
 export function trackScrollDepth(percent: number) {
-  if (typeof window !== 'undefined' && window.gtag) {
-    window.gtag('event', 'scroll', {
+  const win = window as GtagWindow;
+  if (typeof window !== 'undefined' && win.gtag) {
+    win.gtag('event', 'scroll', {
       percent_scrolled: percent
     });
   }
