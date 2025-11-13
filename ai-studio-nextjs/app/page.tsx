@@ -487,7 +487,7 @@ export default function Landing() {
           <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1200px] h-[1200px] bg-gradient-to-br from-violet-700/10 via-fuchsia-600/5 to-cyan-500/5 blur-3xl rounded-full" />
         </div>
 
-        {/* Навбар */}
+        {/* Header */}
         <header className="sticky top-0 z-40 border-b border-white/10 bg-neutral-950/80 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/60">
           <div className={`${SECTION_CLASSES} h-16 flex items-center justify-between`}>
             <a href="#top" className="inline-flex items-center gap-2">
