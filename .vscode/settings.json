@@ -1,6 +1,10 @@
 {
-  "editor.lineHeight": 0,
   "editor.fontSize": 14,
+  "editor.lineHeight": 20,
   "editor.cursorStyle": "line",
-  "editor.cursorBlinking": "smooth"
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorWidth": 2,
+  "editor.renderLineHighlight": "all",
+  "editor.fontFamily": "Consolas, 'Courier New', monospace",
+  "editor.fontLigatures": false
 }
