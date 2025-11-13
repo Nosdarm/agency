@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(npm run build:*)",
+      "Bash(dir /B)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(npm uninstall:*)",
+      "Bash(ping:*)",
+      "Bash(taskkill:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(powershell -Command \"Stop-Process -Id 4548,15652,16912,3184,7588,17700 -Force\")",
+      "Bash(powershell:*)",
+      "Bash(del /F \".next\\dev\\lock\" 2)",
+      "Bash(nul)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(del /F \"ai-studio-nextjs\\nul\" 2)",
+      "Bash(git rm:*)",
+      "Bash(.gitignore)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
