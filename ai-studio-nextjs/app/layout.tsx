@@ -1,9 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
-import { OrganizationSchema, ServiceSchema, BreadcrumbSchema } from './structured-data';
-import Script from 'next/script';
-import GAEvents from './components/GAEvents';
+import { OrganizationSchema, ServiceSchema, BreadcrumbSchema, LocalBusinessSchema } from './structured-data';
+import { GoogleAnalytics } from './analytics';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -14,29 +13,27 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://builditfast.ai'),
-  title: 'BuildItFast.ai | Launch Your MVP in 21 Days | Web, Mobile, SaaS Development',
-  description: 'Launch production-ready MVPs in 21 days. Fixed price, full code ownership. Build SaaS platforms, mobile apps, and web applications that scale. From $15,000.',
+  title: 'MVP Development in 1-2 Weeks from $5,000 | AI-Powered | BuildItFast',
+  description: 'Launch your MVP in 7-14 days. AI-accelerated development reduces costs by 70%. Web, mobile, SaaS platforms. Fixed price, full code ownership. Get started today.',
   keywords: [
     'mvp development',
-    'startup development',
-    'saas development',
-    'mobile app development',
-    'web application development',
-    'react development',
-    'next.js development',
-    'react native development',
-    'mvp in 21 days',
-    'fixed price development',
+    'mvp development services',
+    'mvp development company',
+    'ai mvp development',
+    'fast mvp development',
+    'mvp development in 2 weeks',
+    '$5000 mvp development',
+    'ai powered mvp development',
+    'mvp development for startups',
+    'cheap mvp development services',
+    'build mvp fast',
     'startup mvp',
-    'mvp cost',
-    'mvp pricing',
-    'production ready mvp',
-    'scalable mvp',
-    'b2b saas development'
+    'mvp services',
+    '2 week mvp'
   ],
-  authors: [{ name: 'BuildItFast.ai', url: 'https://builditfast.ai' }],
-  creator: 'BuildItFast.ai',
-  publisher: 'BuildItFast.ai',
+  authors: [{ name: 'BuildItFast', url: 'https://builditfast.ai' }],
+  creator: 'BuildItFast',
+  publisher: 'BuildItFast',
   formatDetection: {
     email: false,
     address: false,
@@ -46,23 +43,23 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
     url: 'https://builditfast.ai',
-    siteName: 'BuildItFast.ai',
-    title: 'BuildItFast.ai | Launch Your MVP in 21 Days',
-    description: 'Launch production-ready MVPs in 21 days. Fixed price, full code ownership. Build web, mobile, and SaaS platforms that scale.',
+    siteName: 'BuildItFast',
+    title: 'Launch Your MVP in 2 Weeks | BuildItFast.ai',
+    description: 'AI + Senior Developers = 70% faster MVP development. From $5,000, fixed price.',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'BuildItFast.ai - Launch Your MVP in 21 Days',
+        alt: 'BuildItFast - AI-Powered MVP Development',
         type: 'image/jpeg',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'BuildItFast.ai | Launch Your MVP in 21 Days',
-    description: 'Launch production-ready MVPs in 21 days. Fixed price, full code ownership.',
+    title: 'MVP in 2 Weeks from $5k | BuildItFast',
+    description: 'AI-powered MVP development. 3x faster, 70% cheaper.',
     images: ['/og-image.jpg'],
     creator: '@builditfast',
   },
@@ -83,7 +80,6 @@ export const metadata: Metadata = {
   },
   verification: {
     google: 'YOUR_GOOGLE_VERIFICATION_CODE',
-    yandex: 'YOUR_YANDEX_VERIFICATION_CODE',
   },
   category: 'technology',
 };
@@ -93,11 +89,12 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const gaId = process.env.NEXT_PUBLIC_GA_ID;
-
   return (
     <html lang="en" className={inter.variable}>
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="manifest" href="/manifest.json" />
         <meta name="theme-color" content="#7c3aed" />
 
@@ -105,27 +102,10 @@ export default function RootLayout({
         <OrganizationSchema />
         <ServiceSchema />
         <BreadcrumbSchema />
+        <LocalBusinessSchema />
       </head>
       <body className={`${inter.className} antialiased`}>
-        {gaId && (
-          <>
-            <Script
-              src={`https://www.googletagmanager.com/gtag/js?id=${gaId}`}
-              strategy="afterInteractive"
-            />
-            <Script id="google-analytics" strategy="afterInteractive">
-              {`
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${gaId}', {
-                  page_path: window.location.pathname,
-                });
-              `}
-            </Script>
-            <GAEvents />
-          </>
-        )}
+        {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
         {children}
       </body>
     </html>

@@ -6,20 +6,31 @@ export function OrganizationSchema() {
         __html: JSON.stringify({
           "@context": "https://schema.org",
           "@type": "Organization",
-          "name": "BuildItFast.ai",
+          "name": "BuildItFast",
           "url": "https://builditfast.ai",
           "logo": "https://builditfast.ai/logo.png",
-          "description": "Launch production-ready MVPs in 21 days. Fixed price from $15,000. We build SaaS platforms, mobile apps, and web applications that scale.",
+          "description": "AI-powered MVP development in 1-2 weeks",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "Ukraine"
+          },
           "contactPoint": {
             "@type": "ContactPoint",
             "contactType": "Sales",
-            "email": "hello@builditfast.ai",
-            "availableLanguage": ["English", "Russian", "Ukrainian"]
+            "email": "sales@builditfast.ai",
+            "availableLanguage": ["English"]
           },
           "sameAs": [
-            "https://t.me/builditfast",
-            "https://github.com/builditfast"
-          ]
+            "https://twitter.com/builditfast",
+            "https://linkedin.com/company/builditfast"
+          ],
+          "offers": {
+            "@type": "AggregateOffer",
+            "priceCurrency": "USD",
+            "lowPrice": "5000",
+            "highPrice": "25000",
+            "offerCount": "3"
+          }
         })
       }}
     />
@@ -37,11 +48,11 @@ export function ServiceSchema() {
           "serviceType": "MVP Development",
           "provider": {
             "@type": "Organization",
-            "name": "BuildItFast.ai"
+            "name": "BuildItFast"
           },
           "areaServed": {
             "@type": "Country",
-            "name": ["United States", "Canada", "United Kingdom", "European Union"]
+            "name": ["United States", "Ukraine", "European Union"]
           },
           "hasOfferCatalog": {
             "@type": "OfferCatalog",
@@ -51,18 +62,18 @@ export function ServiceSchema() {
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Startup MVP",
-                  "description": "Up to 10 key features, Web OR Mobile, basic analytics, 2-3 weeks development, 30 days support"
+                  "name": "Quick MVP",
+                  "description": "Web application with up to 10 screen designs, basic authentication, and deployment. Perfect for idea validation."
                 },
-                "price": "7000",
+                "price": "5000",
                 "priceCurrency": "USD"
               },
               {
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Scale-Ready Platform",
-                  "description": "Up to 20 features, Web + Mobile, payments & subscriptions, admin panel, 3-5 weeks development, 60 days support"
+                  "name": "Full MVP",
+                  "description": "Web + Mobile (PWA) with UI/UX design, payment system, user dashboard, testing, and CI/CD. Perfect for market launch."
                 },
                 "price": "15000",
                 "priceCurrency": "USD"
@@ -71,10 +82,10 @@ export function ServiceSchema() {
                 "@type": "Offer",
                 "itemOffered": {
                   "@type": "Service",
-                  "name": "Enterprise Foundation",
-                  "description": "Unlimited scope, multi-platform, integrations & API, compliance ready, 4-8 weeks, 90 days support"
+                  "name": "Advanced MVP",
+                  "description": "Web + Native Mobile with complete design system, admin panel, API integrations, full testing, and DevOps. Perfect for SaaS platforms."
                 },
-                "price": "30000",
+                "price": "25000",
                 "priceCurrency": "USD"
               }
             ]
@@ -129,6 +140,26 @@ export function BreadcrumbSchema() {
               "item": "https://builditfast.ai/#pricing"
             }
           ]
+        })
+      }}
+    />
+  );
+}
+
+export function LocalBusinessSchema() {
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: JSON.stringify({
+          "@context": "http://schema.org",
+          "@type": "LocalBusiness",
+          "name": "BuildItFast",
+          "address": {
+            "@type": "PostalAddress",
+            "addressCountry": "Ukraine"
+          },
+          "priceRange": "$5,000 - $25,000"
         })
       }}
     />
