@@ -13,8 +13,8 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://builditfast.ai'),
-  title: 'MVP Development in 1-2 Weeks from $5,000 | AI-Powered | BuildItFast',
-  description: 'Launch your MVP in 7-14 days. AI-accelerated development reduces costs by 70%. Web, mobile, SaaS platforms. Fixed price, full code ownership. Get started today.',
+  title: 'MVP Development in 2-4 Weeks from $5,000 | AI-Powered | BuildItFast',
+  description: 'Launch your MVP in 2-4 weeks. AI-accelerated development reduces costs by 70%. Web, mobile, SaaS platforms. Fixed price, full code ownership. Get started today.',
   keywords: [
     'mvp development',
     'mvp development services',
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     locale: 'en_US',
     url: 'https://builditfast.ai',
     siteName: 'BuildItFast',
-    title: 'Launch Your MVP in 2 Weeks | BuildItFast.ai',
+    title: 'Launch Your MVP in 2-4 Weeks | BuildItFast.ai',
     description: 'AI + Senior Developers = 70% faster MVP development. From $5,000, fixed price.',
     images: [
       {
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'MVP in 2 Weeks from $5k | BuildItFast',
+    title: 'MVP in 2-4 Weeks from $5k | BuildItFast',
     description: 'AI-powered MVP development. 3x faster, 70% cheaper.',
     images: ['/og-image.jpg'],
     creator: '@builditfast',
