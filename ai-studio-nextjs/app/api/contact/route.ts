@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     // After domain verification, change to: 'BuildItFast <noreply@builditfast.ai>'
     const { data, error } = await resend.emails.send({
       from: 'BuildItFast <onboarding@resend.dev>',
-      to: [recipientEmail],
+      to: recipientEmail,
       replyTo: email,
       subject: `Specification Request — ${name}`,
       html: `
