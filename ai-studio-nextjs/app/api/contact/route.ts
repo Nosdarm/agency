@@ -37,8 +37,10 @@ export async function POST(request: Request) {
     const recipientEmail = process.env.CONTACT_EMAIL || 'ruslankuznecov90@gmail.com';
 
     // Send email using Resend
+    // Note: Use 'onboarding@resend.dev' until domain is verified
+    // After domain verification, change to: 'BuildItFast <noreply@builditfast.ai>'
     const { data, error } = await resend.emails.send({
-      from: 'BuildItFast <noreply@builditfast.ai>',
+      from: 'BuildItFast <onboarding@resend.dev>',
       to: [recipientEmail],
       replyTo: email,
       subject: `Specification Request — ${name}`,
