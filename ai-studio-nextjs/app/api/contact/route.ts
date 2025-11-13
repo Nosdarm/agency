@@ -58,7 +58,7 @@ export async function POST(request: Request) {
     if (error) {
       console.error('Resend error:', error);
       return NextResponse.json(
-        { error: 'Failed to send email' },
+        { error: 'Failed to send email', details: error.message || String(error) },
         { status: 500 }
       );
     }
@@ -67,7 +67,7 @@ export async function POST(request: Request) {
   } catch (error) {
     console.error('API error:', error);
     return NextResponse.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', details: error instanceof Error ? error.message : String(error) },
       { status: 500 }
     );
   }
