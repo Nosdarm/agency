@@ -58,20 +58,20 @@ export function TypedCodeAnimation({ className = "" }: TypedCodeAnimationProps) 
 
   return (
     <div
-      className={`relative rounded-2xl border border-white/10 bg-neutral-950/80 backdrop-blur-sm p-6 font-mono text-sm overflow-hidden ${className}`}
+      className={`relative rounded-2xl border border-white/10 bg-neutral-950/80 backdrop-blur-sm p-3 sm:p-6 font-mono text-xs sm:text-sm overflow-hidden ${className}`}
     >
       {/* Terminal header */}
-      <div className="flex items-center gap-2 mb-4 pb-3 border-b border-white/5">
-        <div className="flex gap-1.5">
-          <div className="w-3 h-3 rounded-full bg-red-500/80" />
-          <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-          <div className="w-3 h-3 rounded-full bg-green-500/80" />
+      <div className="flex items-center gap-2 mb-3 sm:mb-4 pb-2 sm:pb-3 border-b border-white/5">
+        <div className="flex gap-1 sm:gap-1.5">
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-red-500/80" />
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-yellow-500/80" />
+          <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-green-500/80" />
         </div>
-        <span className="text-neutral-500 text-xs ml-2">project.ts</span>
+        <span className="text-neutral-500 text-[10px] sm:text-xs ml-2">project.ts</span>
       </div>
 
       {/* Code content with syntax highlighting */}
-      <pre className="text-left leading-relaxed">
+      <pre className="text-left leading-relaxed overflow-x-auto">
         {codeLines.map((line, i) => {
           const isCurrentLine = i === currentLine;
           const isPastLine = i < currentLine;
@@ -82,16 +82,16 @@ export function TypedCodeAnimation({ className = "" }: TypedCodeAnimationProps) 
             : "";
 
           return (
-            <div key={i} className="relative">
+            <div key={i} className="relative whitespace-nowrap">
               {/* Line number */}
-              <span className="inline-block w-8 text-neutral-600 select-none">
+              <span className="inline-block w-6 sm:w-8 text-neutral-600 select-none text-[10px] sm:text-xs">
                 {i + 1}
               </span>
               {/* Code text */}
               <span className={line.color}>{lineText}</span>
               {/* Cursor */}
               {isCurrentLine && (
-                <span className="inline-block w-2 h-5 bg-violet-500 ml-0.5 animate-pulse" />
+                <span className="inline-block w-1.5 sm:w-2 h-4 sm:h-5 bg-violet-500 ml-0.5 animate-pulse" />
               )}
             </div>
           );

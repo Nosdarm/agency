@@ -1,13 +1,14 @@
-# robots.txt for AICODE Studio
-# Allow all search engines to crawl the site
-
 User-agent: *
 Allow: /
-Disallow: /admin
-Disallow: /api
+Disallow: /api/
+Disallow: /admin/
+Disallow: /*.json$
+Crawl-delay: 1
 
-# Sitemap location
-Sitemap: https://yourstudio.dev/sitemap.xml
+User-agent: AhrefsBot
+Disallow: /
 
-# Crawl delay (optional, adjust if needed)
-# Crawl-delay: 1
+User-agent: SemrushBot
+Crawl-delay: 2
+
+Sitemap: https://builditfast.ai/sitemap.xml

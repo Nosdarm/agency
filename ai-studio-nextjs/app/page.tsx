@@ -12,11 +12,13 @@ import {
   Gauge,
   Lock,
   Mail,
+  Menu,
   Phone,
   Rocket,
   Search,
   Shield,
   Sparkles,
+  X,
   Zap,
 } from "lucide-react";
 import CountUp from "react-countup";
@@ -51,15 +53,15 @@ const CLUTCH = {
 
 function SectionTitle({ kicker, title, subtitle, id }: { kicker?: string; title: string; subtitle?: string; id?: string }) {
   return (
-    <div className="text-center max-w-3xl mx-auto">
+    <div className="text-center max-w-3xl mx-auto px-4">
       {kicker && (
         <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-violet-300/80 mb-3">
           <Sparkles className="w-4 h-4" />
           <span>{kicker}</span>
         </div>
       )}
-      <h2 id={id} className="text-3xl sm:text-4xl font-semibold text-white leading-tight">{title}</h2>
-      {subtitle && <p className="mt-4 text-neutral-300">{subtitle}</p>}
+      <h2 id={id} className="text-2xl sm:text-3xl lg:text-4xl font-semibold text-white leading-tight">{title}</h2>
+      {subtitle && <p className="mt-3 sm:mt-4 text-sm sm:text-base text-neutral-300">{subtitle}</p>}
     </div>
   );
 }
@@ -67,14 +69,14 @@ function SectionTitle({ kicker, title, subtitle, id }: { kicker?: string; title:
 function FeatureItem({ icon: Icon, title, desc }: { icon: any; title: string; desc: string }) {
   return (
     <Card3D className="group">
-      <article className="relative rounded-2xl border border-white/5 bg-white/5 hover:bg-white/[0.07] transition p-6 flex flex-col h-full">
-        <div className="flex items-center gap-3">
-          <div className={`p-2 rounded-xl bg-gradient-to-tr ${brand.primary} text-white/95 shadow`}>
-            <Icon className="w-5 h-5" />
+      <article className="relative rounded-xl sm:rounded-2xl border border-white/5 bg-white/5 hover:bg-white/[0.07] transition p-4 sm:p-6 flex flex-col h-full">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <div className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-gradient-to-tr ${brand.primary} text-white/95 shadow flex-shrink-0`}>
+            <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
           </div>
-          <h3 className="text-white font-medium text-lg">{title}</h3>
+          <h3 className="text-white font-medium text-base sm:text-lg">{title}</h3>
         </div>
-        <p className="text-neutral-300 mt-3 leading-relaxed flex-1">{desc}</p>
+        <p className="text-neutral-300 mt-2 sm:mt-3 text-sm sm:text-base leading-relaxed flex-1">{desc}</p>
       </article>
     </Card3D>
   );
@@ -179,15 +181,15 @@ function PriceCard({
       />
 
       <article
-        className={`relative rounded-3xl border ${
+        className={`relative rounded-2xl sm:rounded-3xl border ${
           highlight ? "border-violet-500/50" : "border-white/5"
-        } bg-white/[0.04] backdrop-blur-sm p-6 sm:p-8 flex flex-col shadow-2xl h-full transition-all duration-300 ${
+        } bg-white/[0.04] backdrop-blur-sm p-5 sm:p-6 lg:p-8 flex flex-col shadow-2xl h-full transition-all duration-300 ${
           isHovered ? "border-violet-500/30 bg-white/[0.06]" : ""
         }`}
       >
         {badge && (
           <motion.div
-            className="absolute -top-3 left-6 text-xs font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow"
+            className="absolute -top-3 left-4 sm:left-6 text-xs font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow"
             animate={{
               scale: [1, 1.05, 1],
               boxShadow: [
@@ -205,12 +207,12 @@ function PriceCard({
             {badge}
           </motion.div>
         )}
-        <h3 className="text-white text-xl font-semibold">{name}</h3>
+        <h3 className="text-white text-lg sm:text-xl font-semibold">{name}</h3>
         {timeframe && (
           <div className="mt-2 text-sm text-violet-300">{timeframe}</div>
         )}
-        <div className="mt-4">
-          <span className="text-4xl font-semibold text-white">
+        <div className="mt-3 sm:mt-4">
+          <span className="text-3xl sm:text-4xl font-semibold text-white">
             <CountUp
               start={0}
               end={numericPrice}
@@ -225,21 +227,21 @@ function PriceCard({
               }}
             />
           </span>
-          <span className="text-neutral-400 ml-2">fixed-price</span>
+          <span className="text-neutral-400 ml-1 sm:ml-2 text-sm sm:text-base">fixed-price</span>
         </div>
-        <ul className="mt-6 space-y-3 flex-1">
+        <ul className="mt-4 sm:mt-6 space-y-2 sm:space-y-3 flex-1">
           {features.map((f, i) => (
             <Check key={i}>{f}</Check>
           ))}
         </ul>
         {perfectFor && (
-          <div className="mt-4 pt-4 border-t border-white/10">
-            <p className="text-sm text-neutral-400">{perfectFor}</p>
+          <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10">
+            <p className="text-xs sm:text-sm text-neutral-400">{perfectFor}</p>
           </div>
         )}
         <MagneticButton
           href="#contact"
-          className={`mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 font-medium text-white shadow transition-all ${
+          className={`mt-4 sm:mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm sm:text-base font-medium text-white shadow transition-all ${
             highlight
               ? `bg-gradient-to-r ${brand.primary} hover:shadow-lg hover:shadow-violet-500/50`
               : "bg-neutral-800 hover:bg-neutral-700"
@@ -413,7 +415,7 @@ const cases = [
 
 function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <span className="text-xs px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300">
+    <span className="text-[10px] sm:text-xs px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300">
       {children}
     </span>
   );
@@ -459,6 +461,7 @@ export default function Landing() {
   const [form, setForm] = useState({ name: "", email: "", pkg: "Quick MVP", message: "" });
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMessage, setErrorMessage] = useState('');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -521,13 +524,93 @@ export default function Landing() {
               {ENABLED.testimonials && <a className="hover:text-white transition" href="#testimonials">Testimonials</a>}
               <a className="hover:text-white transition" href="#contact">Contact</a>
             </nav>
-            <a
-              href="#contact"
-              className={`hidden md:inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white bg-gradient-to-r ${brand.primary} shadow`}
-            >
-              Request Specification <ArrowRight className="w-4 h-4" />
-            </a>
+            <div className="flex items-center gap-3">
+              <a
+                href="#contact"
+                className={`hidden md:inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white bg-gradient-to-r ${brand.primary} shadow`}
+              >
+                Request Specification <ArrowRight className="w-4 h-4" />
+              </a>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="md:hidden p-2 text-neutral-300 hover:text-white transition"
+                aria-label="Toggle menu"
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
           </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="md:hidden border-t border-white/10 bg-neutral-950/95 backdrop-blur"
+            >
+              <nav className="flex flex-col py-4 px-4 gap-1" aria-label="Mobile navigation">
+                <a
+                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
+                  href="#features"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Features
+                </a>
+                <a
+                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
+                  href="#pricing"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Pricing
+                </a>
+                <a
+                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
+                  href="#cases"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Cases
+                </a>
+                <a
+                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
+                  href="#process"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Process
+                </a>
+                <a
+                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
+                  href="#faq"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  FAQ
+                </a>
+                {ENABLED.testimonials && (
+                  <a
+                    className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
+                    href="#testimonials"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Testimonials
+                  </a>
+                )}
+                <a
+                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
+                  href="#contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Contact
+                </a>
+                <a
+                  href="#contact"
+                  className={`mt-2 mx-4 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-medium text-white bg-gradient-to-r ${brand.primary} shadow`}
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Request Specification <ArrowRight className="w-4 h-4" />
+                </a>
+              </nav>
+            </motion.div>
+          )}
         </header>
 
         <main>
@@ -538,22 +621,22 @@ export default function Landing() {
                 <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-violet-300/90 mb-4">
                   <Sparkles className="w-4 h-4" /> AI-Powered Development
                 </div>
-                <h1 className="text-4xl sm:text-5xl font-semibold text-white leading-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight">
                   MVP in 2-4 Weeks from <span className={`bg-clip-text text-transparent bg-gradient-to-r ${brand.primary}`}>$5,000</span>
                 </h1>
-                <p className="mt-5 text-neutral-300 text-lg leading-relaxed">
+                <p className="mt-4 sm:mt-5 text-neutral-300 text-base sm:text-lg leading-relaxed">
                   Full development cycle: design, web, mobile, testing.
                   We use AI to accelerate, but code is written by senior developers.
                 </p>
-                <div className="mt-8 flex flex-col sm:flex-row gap-3">
-                  <a href="#contact" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg`}>
+                <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3">
+                  <a href="#contact" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg text-sm sm:text-base`}>
                     Discuss Project <ArrowRight className="w-4 h-4" />
                   </a>
-                  <a href="#pricing" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 ${brand.ring}`}>
+                  <a href="#pricing" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 ${brand.ring} text-sm sm:text-base`}>
                     Pricing & Timeline
                   </a>
                 </div>
-                <ul className="mt-8 grid sm:grid-cols-3 gap-3 text-sm">
+                <ul className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 text-sm">
                   <Check>Spec in 48 hours</Check>
                   <Check>Demo every week</Check>
                   <Check>7 days bug fixes</Check>
@@ -779,34 +862,34 @@ export default function Landing() {
 
           {/* Contact */}
           <section id="contact" className={`${SECTION_CLASSES} py-16 sm:py-24`} aria-labelledby="contact-heading">
-            <div className="grid lg:grid-cols-5 gap-8">
+            <div className="grid lg:grid-cols-5 gap-8 lg:gap-12">
               <div className="lg:col-span-2">
                 <SectionTitle id="contact-heading" kicker="Contact" title="Request Free Specification" subtitle="Leave your contacts and brief description — we'll return with SOW/DoD within 48 hours." />
-                <div className="mt-8 space-y-4 text-neutral-300">
-                  <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-violet-300"/> Quick call: 20–30 minutes</div>
-                  <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-violet-300"/> sales@builditfast.ai</div>
+                <div className="mt-6 sm:mt-8 space-y-3 sm:space-y-4 text-neutral-300 text-sm sm:text-base">
+                  <div className="flex items-center gap-3"><Phone className="w-4 h-4 text-violet-300 flex-shrink-0"/> Quick call: 20–30 minutes</div>
+                  <div className="flex items-center gap-3"><Mail className="w-4 h-4 text-violet-300 flex-shrink-0"/> sales@builditfast.ai</div>
                 </div>
               </div>
 
               <div className="lg:col-span-3">
                 <form
                   onSubmit={handleSubmit}
-                  className="rounded-3xl border border-white/10 bg-white/[0.04] p-6 sm:p-8"
+                  className="rounded-2xl sm:rounded-3xl border border-white/10 bg-white/[0.04] p-5 sm:p-6 lg:p-8"
                 >
-                  <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
                     <div>
-                      <label htmlFor="name" className="text-sm text-neutral-300">Your Name</label>
+                      <label htmlFor="name" className="text-xs sm:text-sm text-neutral-300 block mb-1">Your Name</label>
                       <input
                         id="name"
                         required
                         value={form.name}
                         onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className={`mt-1 w-full rounded-xl bg-neutral-900 border border-white/10 px-4 py-2.5 text-base outline-none focus:ring-2 ${brand.ring}`}
+                        className={`w-full rounded-xl bg-neutral-900 border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none focus:ring-2 ${brand.ring}`}
                         placeholder="John / Sarah"
                       />
                     </div>
                     <div>
-                      <label htmlFor="email" className="text-sm text-neutral-300">Email</label>
+                      <label htmlFor="email" className="text-xs sm:text-sm text-neutral-300 block mb-1">Email</label>
                       <input
                         id="email"
                         required
@@ -814,19 +897,19 @@ export default function Landing() {
                         autoComplete="email"
                         value={form.email}
                         onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className={`mt-1 w-full rounded-xl bg-neutral-900 border border-white/10 px-4 py-2.5 text-base outline-none focus:ring-2 ${brand.ring}`}
+                        className={`w-full rounded-xl bg-neutral-900 border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none focus:ring-2 ${brand.ring}`}
                         placeholder="you@company.com"
                       />
                     </div>
                   </div>
 
-                  <div className="mt-4">
-                    <label htmlFor="package" className="text-sm text-neutral-300">Package</label>
+                  <div className="mt-3 sm:mt-4">
+                    <label htmlFor="package" className="text-xs sm:text-sm text-neutral-300 block mb-1">Package</label>
                     <select
                       id="package"
                       value={form.pkg}
                       onChange={(e) => setForm({ ...form, pkg: e.target.value })}
-                      className={`mt-1 w-full rounded-xl bg-neutral-900 border border-white/10 px-4 py-2.5 text-base outline-none focus:ring-2 ${brand.ring}`}
+                      className={`w-full rounded-xl bg-neutral-900 border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none focus:ring-2 ${brand.ring}`}
                     >
                       {packages.map((p) => (
                         <option key={p.name} value={p.name}>{p.name}</option>
@@ -834,37 +917,37 @@ export default function Landing() {
                     </select>
                   </div>
 
-                  <div className="mt-4">
-                    <label htmlFor="message" className="text-sm text-neutral-300">Brief Description</label>
+                  <div className="mt-3 sm:mt-4">
+                    <label htmlFor="message" className="text-xs sm:text-sm text-neutral-300 block mb-1">Brief Description</label>
                     <textarea
                       id="message"
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      rows={5}
-                      className={`mt-1 w-full rounded-2xl bg-neutral-900 border border-white/10 px-4 py-3 text-base outline-none focus:ring-2 ${brand.ring}`}
+                      rows={4}
+                      className={`w-full rounded-xl sm:rounded-2xl bg-neutral-900 border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none focus:ring-2 ${brand.ring}`}
                     />
                   </div>
 
                   {submitStatus === 'success' && (
-                    <div className="mb-4 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400">
-                      <div className="flex items-center gap-2">
-                        <CheckCircle2 className="w-5 h-5" />
-                        <span>Message sent successfully! We'll get back to you within 48 hours.</span>
+                    <div className="mt-4 p-3 sm:p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400">
+                      <div className="flex items-start gap-2">
+                        <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                        <span className="text-xs sm:text-sm">Message sent successfully! We'll get back to you within 48 hours.</span>
                       </div>
                     </div>
                   )}
 
                   {submitStatus === 'error' && (
-                    <div className="mb-4 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400">
-                      <span>Error: {errorMessage}. Please try again or email us directly.</span>
+                    <div className="mt-4 p-3 sm:p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400">
+                      <span className="text-xs sm:text-sm">Error: {errorMessage}. Please try again or email us directly.</span>
                     </div>
                   )}
 
-                  <div className="mt-6 flex flex-col sm:flex-row gap-3">
+                  <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row gap-3">
                     <button
                       type="submit"
                       disabled={submitStatus === 'loading'}
-                      className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed`}
+                      className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm sm:text-base font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed`}
                     >
                       {submitStatus === 'loading' ? (
                         <>
@@ -885,7 +968,7 @@ export default function Landing() {
                       href="https://calendly.com/"
                       target="_blank"
                       rel="noreferrer noopener"
-                      className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 min-h-[48px]"
+                      className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm sm:text-base font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 min-h-[48px]"
                     >
                       Schedule Call
                     </a>
@@ -898,14 +981,14 @@ export default function Landing() {
 
         {/* Footer */}
         <footer className="border-t border-white/10">
-          <div className={`${SECTION_CLASSES} py-10 flex flex-col sm:flex-row items-center justify-between gap-6`}>
+          <div className={`${SECTION_CLASSES} py-8 sm:py-10 flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6`}>
             <div className="flex items-center gap-2">
-              <div className={`w-6 h-6 rounded-lg bg-gradient-to-br ${brand.primary}`} />
-              <span className="text-sm text-neutral-300">© {new Date().getFullYear()} BuildItFast. All rights reserved.</span>
+              <div className={`w-5 h-5 sm:w-6 sm:h-6 rounded-lg bg-gradient-to-br ${brand.primary}`} />
+              <span className="text-xs sm:text-sm text-neutral-300 text-center sm:text-left">© {new Date().getFullYear()} BuildItFast. All rights reserved.</span>
             </div>
-            <div className="flex items-center gap-5 text-sm">
-              <a href="#" className="text-neutral-300 hover:text-white">Privacy Policy</a>
-              <a href="#" className="text-neutral-300 hover:text-white">Terms of Service</a>
+            <div className="flex items-center gap-4 sm:gap-5 text-xs sm:text-sm">
+              <a href="#" className="text-neutral-300 hover:text-white transition">Privacy Policy</a>
+              <a href="#" className="text-neutral-300 hover:text-white transition">Terms of Service</a>
             </div>
           </div>
         </footer>
