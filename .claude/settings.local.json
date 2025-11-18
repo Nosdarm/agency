@@ -40,7 +40,13 @@
       "Bash(del /F /Q \".next\\dev\\lock\" 2)",
       "Bash(set PORT=3001)",
       "Bash(C:devagencyprod-html.txt)",
-      "Bash(copy C:devagencyai-studio-nextjsapppage.tsx C:devagencyai-studio-nextjsapppage.tsx.backup)"
+      "Bash(copy C:devagencyai-studio-nextjsapppage.tsx C:devagencyai-studio-nextjsapppage.tsx.backup)",
+      "Bash(check.html)",
+      "Bash(for url in \"https://builditfast.ai/pricing\" \"https://builditfast.ai/case-studies\" \"https://builditfast.ai/contact\" \"https://builditfast.ai/blog\")",
+      "Bash(do echo \"Checking: $url\")",
+      "Bash(done)",
+      "Bash(for url in \"https://builditfast.ai\" \"https://builditfast.ai/mvp-development-services\" \"https://builditfast.ai/startup-mvp-development\" \"https://builditfast.ai/blog\" \"https://builditfast.ai/blog/how-much-does-mvp-development-cost\")",
+      "Bash(do echo -n \"$url - \")"
     ],
     "deny": [],
     "ask": []
