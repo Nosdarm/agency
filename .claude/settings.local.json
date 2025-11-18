@@ -25,7 +25,20 @@
       "Bash(git merge:*)",
       "Bash(git push:*)",
       "Bash(git stash:*)",
-      "Bash(npx playwright test:*)"
+      "Bash(npx playwright test:*)",
+      "Bash(del /F \"ai-studio-nextjs\\.next\\dev\\lock\" 2)",
+      "Bash(vercel --version:*)",
+      "Bash(vercel env ls:*)",
+      "Bash(vercel env add:*)",
+      "Bash(vercel:*)",
+      "Bash(curl:*)",
+      "Bash(printf:*)",
+      "Bash(where:*)",
+      "Bash(npx localtunnel --port 3000)",
+      "Bash(sitemap.ts)",
+      "Bash(page.tsx)",
+      "Bash(del /F /Q \".next\\dev\\lock\" 2)",
+      "Bash(set PORT=3001)"
     ],
     "deny": [],
     "ask": []
