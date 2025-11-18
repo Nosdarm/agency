@@ -38,7 +38,9 @@
       "Bash(sitemap.ts)",
       "Bash(page.tsx)",
       "Bash(del /F /Q \".next\\dev\\lock\" 2)",
-      "Bash(set PORT=3001)"
+      "Bash(set PORT=3001)",
+      "Bash(C:devagencyprod-html.txt)",
+      "Bash(copy C:devagencyai-studio-nextjsapppage.tsx C:devagencyai-studio-nextjsapppage.tsx.backup)"
     ],
     "deny": [],
     "ask": []

@@ -1,7 +1,3 @@
-"use client";
-
-import React, { useMemo, useState, useEffect, useRef } from "react";
-import { motion, useMotionValue, useSpring, useInView } from "framer-motion";
 import {
   ArrowRight,
   CalendarDays,
@@ -9,46 +5,27 @@ import {
   Clock,
   Code2,
   FileText,
-  Gauge,
-  Lock,
   Mail,
-  Menu,
   Phone,
   Rocket,
   Search,
   Shield,
   Sparkles,
-  X,
-  Zap,
 } from "lucide-react";
-import CountUp from "react-countup";
 import { FAQSchema } from "./structured-data";
 import { AnimatedGridBackground } from "./components/AnimatedGridBackground";
-import { TypedCodeAnimation } from "./components/TypedCodeAnimation";
-import { Card3D } from "./components/Card3D";
+import { AnimatedHero } from "./components/AnimatedHero";
+import { ClientNav } from "./components/ClientNav";
+import { ContactForm } from "./components/ContactForm";
+import { AnimatedPricing } from "./components/AnimatedPricing";
+import { ClientTransparentPricing } from "./components/ClientTransparentPricing";
+import { ClientFeatures } from "./components/ClientFeatures";
 
 const SECTION_CLASSES = "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8";
 
 const brand = {
   primary: "from-violet-600 via-fuchsia-600 to-cyan-500",
   ring: "ring-violet-500/40",
-};
-
-const ENABLED = {
-  how: true,
-  pricing: true,
-  cases: true,
-  process: true,
-  faq: true,
-  testimonials: false,
-  contact: true,
-};
-
-const CLUTCH = {
-  enabled: false,
-  companyId: "YOUR_CLUTCH_COMPANY_ID",
-  widgetType: "12",
-  theme: "dark" as "dark" | "light",
 };
 
 function SectionTitle({ kicker, title, subtitle, id }: { kicker?: string; title: string; subtitle?: string; id?: string }) {
@@ -66,22 +43,6 @@ function SectionTitle({ kicker, title, subtitle, id }: { kicker?: string; title:
   );
 }
 
-function FeatureItem({ icon: Icon, title, desc }: { icon: any; title: string; desc: string }) {
-  return (
-    <Card3D className="group">
-      <article className="relative rounded-xl sm:rounded-2xl border border-white/5 bg-white/5 hover:bg-white/[0.07] transition p-4 sm:p-6 flex flex-col h-full">
-        <div className="flex items-center gap-2 sm:gap-3">
-          <div className={`p-1.5 sm:p-2 rounded-lg sm:rounded-xl bg-gradient-to-tr ${brand.primary} text-white/95 shadow flex-shrink-0`}>
-            <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
-          </div>
-          <h3 className="text-white font-medium text-base sm:text-lg">{title}</h3>
-        </div>
-        <p className="text-neutral-300 mt-2 sm:mt-3 text-sm sm:text-base leading-relaxed flex-1">{desc}</p>
-      </article>
-    </Card3D>
-  );
-}
-
 function Check({ children }: { children: React.ReactNode }) {
   return (
     <li className="flex items-start gap-3">
@@ -91,245 +52,13 @@ function Check({ children }: { children: React.ReactNode }) {
   );
 }
 
-function MagneticButton({
-  children,
-  className,
-  href
-}: {
-  children: React.ReactNode;
-  className: string;
-  href: string;
-}) {
-  const ref = useRef<HTMLAnchorElement>(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const springConfig = { damping: 30, stiffness: 300 };
-  const springX = useSpring(x, springConfig);
-  const springY = useSpring(y, springConfig);
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (!ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const centerX = rect.left + rect.width / 2;
-    const centerY = rect.top + rect.height / 2;
-    const distanceX = e.clientX - centerX;
-    const distanceY = e.clientY - centerY;
-
-    // Magnetic effect with max distance
-    const maxDistance = 40;
-    const distance = Math.sqrt(distanceX * distanceX + distanceY * distanceY);
-    const strength = Math.min(distance / maxDistance, 1);
-
-    x.set(distanceX * strength * 0.3);
-    y.set(distanceY * strength * 0.3);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
+function Chip({ children }: { children: React.ReactNode }) {
   return (
-    <motion.a
-      ref={ref}
-      href={href}
-      className={className}
-      style={{ x: springX, y: springY }}
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-    >
+    <span className="text-[10px] sm:text-xs px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300">
       {children}
-    </motion.a>
+    </span>
   );
 }
-
-function PriceCard({
-  name,
-  price,
-  timeframe,
-  features,
-  highlight = false,
-  badge,
-  perfectFor,
-}: {
-  name: string;
-  price: string;
-  timeframe?: string;
-  features: string[];
-  highlight?: boolean;
-  badge?: string;
-  perfectFor?: string;
-}) {
-  const [isHovered, setIsHovered] = useState(false);
-  const [hasAnimated, setHasAnimated] = useState(false);
-
-  // Extract numeric value from price string (e.g., "$5,000" -> 5000)
-  const numericPrice = parseInt(price.replace(/[^0-9]/g, '')) || 0;
-
-  return (
-    <div
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      onAnimationStart={() => setHasAnimated(true)}
-      className="group relative h-full"
-    >
-      {/* Glow effect on hover */}
-      <motion.div
-        className="absolute -inset-0.5 rounded-3xl bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 opacity-0 blur-xl transition-opacity duration-500"
-        animate={{ opacity: isHovered ? 0.3 : 0 }}
-      />
-
-      <article
-        className={`relative rounded-2xl sm:rounded-3xl border ${
-          highlight ? "border-violet-500/50" : "border-white/5"
-        } bg-white/[0.04] backdrop-blur-sm p-5 sm:p-6 lg:p-8 flex flex-col shadow-2xl h-full transition-all duration-300 ${
-          isHovered ? "border-violet-500/30 bg-white/[0.06]" : ""
-        }`}
-      >
-        {badge && (
-          <motion.div
-            className="absolute -top-3 left-4 sm:left-6 text-xs font-medium px-2.5 py-1 rounded-full bg-gradient-to-r from-violet-600 to-fuchsia-600 text-white shadow"
-            animate={{
-              scale: [1, 1.05, 1],
-              boxShadow: [
-                "0 0 0 0 rgba(139, 92, 246, 0.4)",
-                "0 0 0 8px rgba(139, 92, 246, 0)",
-                "0 0 0 0 rgba(139, 92, 246, 0)",
-              ],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-          >
-            {badge}
-          </motion.div>
-        )}
-        <h3 className="text-white text-lg sm:text-xl font-semibold">{name}</h3>
-        {timeframe && (
-          <div className="mt-2 text-sm text-violet-300">{timeframe}</div>
-        )}
-        <div className="mt-3 sm:mt-4">
-          <span className="text-3xl sm:text-4xl font-semibold text-white">
-            <CountUp
-              start={0}
-              end={numericPrice}
-              duration={2.5}
-              separator=","
-              prefix="$"
-              useEasing={true}
-              easingFn={(t, b, c, d) => {
-                // easeOutQuad
-                t /= d;
-                return -c * t * (t - 2) + b;
-              }}
-            />
-          </span>
-          <span className="text-neutral-400 ml-1 sm:ml-2 text-sm sm:text-base">fixed-price</span>
-        </div>
-        <ul className="mt-4 sm:mt-6 space-y-2 sm:space-y-3 flex-1">
-          {features.map((f, i) => (
-            <Check key={i}>{f}</Check>
-          ))}
-        </ul>
-        {perfectFor && (
-          <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-white/10">
-            <p className="text-xs sm:text-sm text-neutral-400">{perfectFor}</p>
-          </div>
-        )}
-        <MagneticButton
-          href="#contact"
-          className={`mt-4 sm:mt-6 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm sm:text-base font-medium text-white shadow transition-all ${
-            highlight
-              ? `bg-gradient-to-r ${brand.primary} hover:shadow-lg hover:shadow-violet-500/50`
-              : "bg-neutral-800 hover:bg-neutral-700"
-          }`}
-        >
-          Choose Package <ArrowRight className="w-4 h-4" />
-        </MagneticButton>
-      </article>
-    </div>
-  );
-}
-
-const features = [
-  {
-    icon: Code2,
-    title: "Full Development Cycle",
-    desc: "Complete MVP development: design, web, mobile, testing. We use AI to accelerate, but code is written by senior developers.",
-  },
-  {
-    icon: Rocket,
-    title: "MVP in 2–4 Weeks",
-    desc: "From $5,000. Backend and frontend templates, ready design system, CI. Weekly demos with real progress.",
-  },
-  {
-    icon: Shield,
-    title: "Clear Boundaries",
-    desc: "Fixed-price, SOW/DoD, feature freeze. Changes handled through transparent change requests.",
-  },
-  {
-    icon: Gauge,
-    title: "Production-Ready Products",
-    desc: "Tech stack for your needs: React/Vite, Next.js, FastAPI/NestJS, PostgreSQL, Stripe, Redis.",
-  },
-  {
-    icon: Lock,
-    title: "Security Basics",
-    desc: "Auth, roles, validation, logging. Minimum — JWT/OAuth + industry best practices.",
-  },
-  {
-    icon: Clock,
-    title: "Fast Start",
-    desc: "Specification within 48h after call. Deploy to Vercel/Render/Fly/Hetzner.",
-  },
-];
-
-const packages = [
-  {
-    name: "Quick MVP",
-    price: "$5,000",
-    timeframe: "1-2 weeks",
-    features: [
-      "Web application",
-      "Up to 10 screen designs",
-      "Basic authentication",
-      "Deployment",
-      "Source code included",
-    ],
-    perfectFor: "Perfect for: idea validation, first prototype",
-  },
-  {
-    name: "Full MVP",
-    price: "$15,000",
-    timeframe: "3-4 weeks",
-    badge: "Most Popular",
-    features: [
-      "Web + Mobile (PWA)",
-      "UI/UX design",
-      "Payment system integration",
-      "User dashboard",
-      "Testing & CI/CD",
-    ],
-    perfectFor: "Perfect for: market launch, first customers",
-    highlight: true,
-  },
-  {
-    name: "Advanced MVP",
-    price: "$25,000",
-    timeframe: "5-8 weeks",
-    features: [
-      "Web + Native Mobile",
-      "Complete design system",
-      "Admin panel",
-      "API & integrations",
-      "Full testing & DevOps",
-    ],
-    perfectFor: "Perfect for: SaaS platforms, marketplaces",
-  },
-];
 
 const whatsIncluded = [
   { icon: FileText, item: "Design in Figma" },
@@ -413,90 +142,7 @@ const cases = [
   },
 ];
 
-function Chip({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="text-[10px] sm:text-xs px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-white/5 border border-white/10 text-neutral-300">
-      {children}
-    </span>
-  );
-}
-
-function ClutchWidget({ companyId, widgetType = "12", theme = "dark" }: { companyId: string; widgetType?: string; theme?: "dark" | "light" }) {
-  useEffect(() => {
-    const existing = document.querySelector('script[src="https://widget.clutch.co/static/js/widget.js"]') as HTMLScriptElement | null;
-    if (!existing) {
-      const s = document.createElement("script");
-      s.src = "https://widget.clutch.co/static/js/widget.js";
-      s.async = true;
-      document.body.appendChild(s);
-    }
-    return () => {};
-  }, []);
-
-  return (
-    <div
-      className="clutch-widget"
-      data-url="https://widget.clutch.co"
-      data-widget-type={widgetType}
-      data-height="auto"
-      data-darkbg={theme === "dark" ? "1" : "0"}
-      data-theme={theme}
-      data-clutchcompany-id={companyId}
-    />
-  );
-}
-
-function TestimonialsSection() {
-  return (
-    <section id="testimonials" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="testimonials-heading">
-      <SectionTitle id="testimonials-heading" kicker="Testimonials" title="What Clients Say" subtitle="Reviews pulled from Clutch via official widget." />
-      <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] p-4 sm:p-6">
-        <ClutchWidget companyId={CLUTCH.companyId} widgetType={CLUTCH.widgetType} theme={CLUTCH.theme} />
-      </div>
-    </section>
-  );
-}
-
 export default function Landing() {
-  const [form, setForm] = useState({ name: "", email: "", pkg: "Quick MVP", message: "" });
-  const [submitStatus, setSubmitStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
-  const [errorMessage, setErrorMessage] = useState('');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setSubmitStatus('loading');
-    setErrorMessage('');
-
-    try {
-      const response = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          packageName: form.pkg,
-          message: form.message,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Failed to send message');
-      }
-
-      setSubmitStatus('success');
-      setForm({ name: "", email: "", pkg: "Quick MVP", message: "" });
-
-      // Reset success message after 5 seconds
-      setTimeout(() => setSubmitStatus('idle'), 5000);
-    } catch (error) {
-      setSubmitStatus('error');
-      setErrorMessage(error instanceof Error ? error.message : 'Failed to send message');
-    }
-  };
-
   return (
     <>
       <div className="min-h-dvh bg-neutral-950 text-neutral-100 antialiased selection:bg-violet-600/30">
@@ -515,143 +161,14 @@ export default function Landing() {
               <div className={`w-7 h-7 rounded-xl bg-gradient-to-br ${brand.primary}`} />
               <span className="font-semibold tracking-wide">BuildItFast</span>
             </a>
-            <nav className="hidden md:flex items-center gap-6 text-sm text-neutral-300" aria-label="Main navigation">
-              <a className="hover:text-white transition" href="#features">Features</a>
-              <a className="hover:text-white transition" href="#pricing">Pricing</a>
-              <a className="hover:text-white transition" href="#cases">Cases</a>
-              <a className="hover:text-white transition" href="#process">Process</a>
-              <a className="hover:text-white transition" href="#faq">FAQ</a>
-              {ENABLED.testimonials && <a className="hover:text-white transition" href="#testimonials">Testimonials</a>}
-              <a className="hover:text-white transition" href="#contact">Contact</a>
-            </nav>
-            <div className="flex items-center gap-3">
-              <a
-                href="#contact"
-                className={`hidden md:inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white bg-gradient-to-r ${brand.primary} shadow`}
-              >
-                Request Specification <ArrowRight className="w-4 h-4" />
-              </a>
-              <button
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 text-neutral-300 hover:text-white transition"
-                aria-label="Toggle menu"
-              >
-                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-              </button>
-            </div>
+            <ClientNav />
           </div>
-
-          {/* Mobile Menu */}
-          {mobileMenuOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="md:hidden border-t border-white/10 bg-neutral-950/95 backdrop-blur"
-            >
-              <nav className="flex flex-col py-4 px-4 gap-1" aria-label="Mobile navigation">
-                <a
-                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
-                  href="#features"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Features
-                </a>
-                <a
-                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
-                  href="#pricing"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Pricing
-                </a>
-                <a
-                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
-                  href="#cases"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Cases
-                </a>
-                <a
-                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
-                  href="#process"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Process
-                </a>
-                <a
-                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
-                  href="#faq"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  FAQ
-                </a>
-                {ENABLED.testimonials && (
-                  <a
-                    className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
-                    href="#testimonials"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    Testimonials
-                  </a>
-                )}
-                <a
-                  className="px-4 py-3 text-neutral-300 hover:text-white hover:bg-white/5 rounded-lg transition"
-                  href="#contact"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Contact
-                </a>
-                <a
-                  href="#contact"
-                  className={`mt-2 mx-4 inline-flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-medium text-white bg-gradient-to-r ${brand.primary} shadow`}
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  Request Specification <ArrowRight className="w-4 h-4" />
-                </a>
-              </nav>
-            </motion.div>
-          )}
         </header>
 
         <main>
           {/* Hero */}
           <section id="top" className={`${SECTION_CLASSES} pt-16 sm:pt-20 lg:pt-28 pb-16`}>
-            <div className="grid lg:grid-cols-2 gap-10 items-center">
-              <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-                <div className="inline-flex items-center gap-2 text-xs uppercase tracking-widest text-violet-300/90 mb-4">
-                  <Sparkles className="w-4 h-4" /> AI-Powered Development
-                </div>
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white leading-tight">
-                  MVP in 2-4 Weeks from <span className={`bg-clip-text text-transparent bg-gradient-to-r ${brand.primary}`}>$5,000</span>
-                </h1>
-                <p className="mt-4 sm:mt-5 text-neutral-300 text-base sm:text-lg leading-relaxed">
-                  Full development cycle: design, web, mobile, testing.
-                  We use AI to accelerate, but code is written by senior developers.
-                </p>
-                <div className="mt-6 sm:mt-8 flex flex-col sm:flex-row gap-3">
-                  <a href="#contact" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg text-sm sm:text-base`}>
-                    Discuss Project <ArrowRight className="w-4 h-4" />
-                  </a>
-                  <a href="#pricing" className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 ${brand.ring} text-sm sm:text-base`}>
-                    Pricing & Timeline
-                  </a>
-                </div>
-                <ul className="mt-6 sm:mt-8 grid grid-cols-1 sm:grid-cols-3 gap-2 sm:gap-3 text-sm">
-                  <Check>Spec in 48 hours</Check>
-                  <Check>Demo every week</Check>
-                  <Check>7 days bug fixes</Check>
-                </ul>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.7, delay: 0.1 }}
-                className="relative"
-              >
-                <TypedCodeAnimation />
-              </motion.div>
-            </div>
+            <AnimatedHero />
           </section>
 
           {/* Features */}
@@ -662,11 +179,7 @@ export default function Landing() {
               title="AI-Accelerated MVP Development: Speed Without Chaos"
               subtitle="We use modern AI tools (Cursor, Claude, GitHub Copilot) to accelerate routine component development by 25-40%. Architecture and code review remain with experienced developers."
             />
-            <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-              {features.map((f, i) => (
-                <FeatureItem key={i} icon={f.icon} title={f.title} desc={f.desc} />
-              ))}
-            </div>
+            <ClientFeatures />
           </section>
 
           {/* Pricing */}
@@ -677,40 +190,7 @@ export default function Landing() {
               title="MVP Development Cost: Transparent Packages"
               subtitle="Fixed prices for MVP development for startups. No hidden fees and scope changes. All requirements fixed in SOW before start."
             />
-            <motion.div
-              className="mt-12 grid lg:grid-cols-3 gap-6"
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-100px" }}
-              variants={{
-                visible: {
-                  transition: {
-                    staggerChildren: 0.15,
-                  },
-                },
-              }}
-            >
-              {packages.map((p, i) => (
-                <motion.div
-                  key={p.name}
-                  variants={{
-                    hidden: { opacity: 0, y: 30 },
-                    visible: { opacity: 1, y: 0 },
-                  }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <PriceCard
-                    name={p.name}
-                    price={p.price}
-                    timeframe={(p as any).timeframe}
-                    features={p.features}
-                    highlight={Boolean((p as any).highlight)}
-                    badge={(p as any).badge}
-                    perfectFor={(p as any).perfectFor}
-                  />
-                </motion.div>
-              ))}
-            </motion.div>
+            <AnimatedPricing />
           </section>
 
           {/* Transparent Pricing */}
@@ -720,37 +200,7 @@ export default function Landing() {
               kicker="Transparent Pricing"
               title="How We Calculate the Price"
             />
-            <div className="mt-10 max-w-4xl mx-auto">
-              <div className="rounded-3xl border border-white/10 bg-white/[0.04] p-8 text-center">
-                <div className="inline-flex items-center gap-3 mb-4">
-                  <Zap className={`w-8 h-8 text-violet-400`} />
-                  <span className="text-5xl font-semibold text-white">
-                    <CountUp start={0} end={2500} duration={2} separator="," prefix="$" />
-                  </span>
-                  <span className="text-2xl text-neutral-400">/ week</span>
-                </div>
-                <p className="text-neutral-300 text-lg mb-6">One week of team work</p>
-                <div className="grid md:grid-cols-2 gap-4 text-left">
-                  <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-                    <h4 className="text-white font-medium mb-2">Team Includes:</h4>
-                    <ul className="space-y-2 text-sm text-neutral-300">
-                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> UI/UX Designer</li>
-                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Frontend Developer</li>
-                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> Backend Developer</li>
-                      <li className="flex items-center gap-2"><CheckCircle2 className="w-4 h-4 text-emerald-400" /> QA Engineer</li>
-                    </ul>
-                  </div>
-                  <div className="rounded-xl bg-white/[0.03] p-4 border border-white/5">
-                    <h4 className="text-white font-medium mb-2">Project Examples:</h4>
-                    <ul className="space-y-2 text-sm text-neutral-300">
-                      <li>Simple SaaS: 2 weeks = <strong className="text-white">$5,000</strong></li>
-                      <li>Marketplace: 4 weeks = <strong className="text-white">$10,000</strong></li>
-                      <li>Platform + Mobile: 8 weeks = <strong className="text-white">$20,000</strong></li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <ClientTransparentPricing />
           </section>
 
           {/* What's Included */}
@@ -841,9 +291,6 @@ export default function Landing() {
             </div>
           </section>
 
-          {/* Testimonials */}
-          {ENABLED.testimonials && CLUTCH.enabled && <TestimonialsSection />}
-
           {/* FAQ */}
           <section id="faq" className={`${SECTION_CLASSES} py-16 sm:py-20`} aria-labelledby="faq-heading">
             <SectionTitle id="faq-heading" kicker="FAQ" title="Frequently Asked Questions About MVP Development" />
@@ -872,108 +319,7 @@ export default function Landing() {
               </div>
 
               <div className="lg:col-span-3">
-                <form
-                  onSubmit={handleSubmit}
-                  className="rounded-2xl sm:rounded-3xl border border-white/10 bg-white/[0.04] p-5 sm:p-6 lg:p-8"
-                >
-                  <div className="grid sm:grid-cols-2 gap-3 sm:gap-4">
-                    <div>
-                      <label htmlFor="name" className="text-xs sm:text-sm text-neutral-300 block mb-1">Your Name</label>
-                      <input
-                        id="name"
-                        required
-                        value={form.name}
-                        onChange={(e) => setForm({ ...form, name: e.target.value })}
-                        className={`w-full rounded-xl bg-neutral-900 border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none focus:ring-2 ${brand.ring}`}
-                        placeholder="John / Sarah"
-                      />
-                    </div>
-                    <div>
-                      <label htmlFor="email" className="text-xs sm:text-sm text-neutral-300 block mb-1">Email</label>
-                      <input
-                        id="email"
-                        required
-                        type="email"
-                        autoComplete="email"
-                        value={form.email}
-                        onChange={(e) => setForm({ ...form, email: e.target.value })}
-                        className={`w-full rounded-xl bg-neutral-900 border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none focus:ring-2 ${brand.ring}`}
-                        placeholder="you@company.com"
-                      />
-                    </div>
-                  </div>
-
-                  <div className="mt-3 sm:mt-4">
-                    <label htmlFor="package" className="text-xs sm:text-sm text-neutral-300 block mb-1">Package</label>
-                    <select
-                      id="package"
-                      value={form.pkg}
-                      onChange={(e) => setForm({ ...form, pkg: e.target.value })}
-                      className={`w-full rounded-xl bg-neutral-900 border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none focus:ring-2 ${brand.ring}`}
-                    >
-                      {packages.map((p) => (
-                        <option key={p.name} value={p.name}>{p.name}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div className="mt-3 sm:mt-4">
-                    <label htmlFor="message" className="text-xs sm:text-sm text-neutral-300 block mb-1">Brief Description</label>
-                    <textarea
-                      id="message"
-                      value={form.message}
-                      onChange={(e) => setForm({ ...form, message: e.target.value })}
-                      rows={4}
-                      className={`w-full rounded-xl sm:rounded-2xl bg-neutral-900 border border-white/10 px-3 sm:px-4 py-2.5 sm:py-3 text-sm sm:text-base outline-none focus:ring-2 ${brand.ring}`}
-                    />
-                  </div>
-
-                  {submitStatus === 'success' && (
-                    <div className="mt-4 p-3 sm:p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400">
-                      <div className="flex items-start gap-2">
-                        <CheckCircle2 className="w-5 h-5 flex-shrink-0 mt-0.5" />
-                        <span className="text-xs sm:text-sm">Message sent successfully! We'll get back to you within 48 hours.</span>
-                      </div>
-                    </div>
-                  )}
-
-                  {submitStatus === 'error' && (
-                    <div className="mt-4 p-3 sm:p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400">
-                      <span className="text-xs sm:text-sm">Error: {errorMessage}. Please try again or email us directly.</span>
-                    </div>
-                  )}
-
-                  <div className="mt-5 sm:mt-6 flex flex-col sm:flex-row gap-3">
-                    <button
-                      type="submit"
-                      disabled={submitStatus === 'loading'}
-                      className={`inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm sm:text-base font-medium text-white bg-gradient-to-r ${brand.primary} shadow-lg min-h-[48px] disabled:opacity-50 disabled:cursor-not-allowed`}
-                    >
-                      {submitStatus === 'loading' ? (
-                        <>
-                          <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                            className="w-4 h-4 border-2 border-white border-t-transparent rounded-full"
-                          />
-                          Sending...
-                        </>
-                      ) : (
-                        <>
-                          Send Request <ArrowRight className="w-4 h-4" />
-                        </>
-                      )}
-                    </button>
-                    <a
-                      href="https://calendly.com/"
-                      target="_blank"
-                      rel="noreferrer noopener"
-                      className="inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm sm:text-base font-medium text-white bg-neutral-800 hover:bg-neutral-700 border border-white/10 min-h-[48px]"
-                    >
-                      Schedule Call
-                    </a>
-                  </div>
-                </form>
+                <ContactForm />
               </div>
             </div>
           </section>
