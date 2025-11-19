@@ -46,21 +46,13 @@ export const metadata: Metadata = {
     siteName: 'BuildItFast',
     title: 'Launch Your MVP in 2-4 Weeks | BuildItFast.ai',
     description: 'AI + Senior Developers = 70% faster MVP development. From $5,000, fixed price.',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'BuildItFast - AI-Powered MVP Development',
-        type: 'image/jpeg',
-      },
-    ],
+    // OG image is auto-generated from app/opengraph-image.tsx
   },
   twitter: {
     card: 'summary_large_image',
     title: 'MVP in 2-4 Weeks from $5k | BuildItFast',
     description: 'AI-powered MVP development. 3x faster, 70% cheaper.',
-    images: ['/og-image.jpg'],
+    // Twitter image is auto-generated from app/opengraph-image.tsx
     creator: '@builditfast',
   },
   robots: {
@@ -78,9 +70,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://builditfast.ai',
   },
-  verification: {
-    google: 'YOUR_GOOGLE_VERIFICATION_CODE',
-  },
+  // Add your Google Search Console verification code here
+  // verification: {
+  //   google: 'YOUR_GOOGLE_VERIFICATION_CODE',
+  // },
   category: 'technology',
 };
 

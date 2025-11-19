@@ -198,7 +198,8 @@ export default function Landing() {
             <SectionTitle
               id="transparent-pricing-heading"
               kicker="Transparent Pricing"
-              title="How We Calculate the Price"
+              title="How We Calculate MVP Development Pricing"
+              subtitle="Transparent breakdown of development costs and timeline"
             />
             <ClientTransparentPricing />
           </section>
@@ -208,8 +209,8 @@ export default function Landing() {
             <SectionTitle
               id="whats-included-heading"
               kicker="What's Included"
-              title="Every Package Includes"
-              subtitle="Complete development cycle from design to deployment"
+              title="What's Included in Every MVP Development Package"
+              subtitle="Complete development cycle from design to deployment with full code ownership"
             />
             <div className="mt-10 grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {whatsIncluded.map((item, i) => (
@@ -228,8 +229,8 @@ export default function Landing() {
             <SectionTitle
               id="project-timeline-heading"
               kicker="Project Timeline"
-              title="4-Week Development Process"
-              subtitle="Clear milestones and deliverables every week"
+              title="4-Week MVP Development Process: From Design to Launch"
+              subtitle="Clear milestones and deliverables every week for rapid market validation"
             />
             <div className="mt-10 grid md:grid-cols-2 lg:grid-cols-4 gap-5">
               {projectTimeline.map((phase, i) => (

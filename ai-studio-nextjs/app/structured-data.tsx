@@ -8,8 +8,8 @@ export function OrganizationSchema() {
           "@type": "Organization",
           "name": "BuildItFast",
           "url": "https://builditfast.ai",
-          "logo": "https://builditfast.ai/logo.png",
-          "description": "AI-powered MVP development in 1-2 weeks",
+          "logo": "https://builditfast.ai/icon.svg",
+          "description": "AI-powered MVP development in 2-4 weeks from $5,000",
           "address": {
             "@type": "PostalAddress",
             "addressCountry": "Ukraine"
