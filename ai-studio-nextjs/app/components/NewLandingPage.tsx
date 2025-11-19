@@ -4,6 +4,7 @@ import { Header } from './Header';
 import { HeroSection } from './HeroSection';
 import { TechStackMarquee } from './TechStackMarquee';
 import { BentoGrid } from './BentoGrid';
+import { CasesSection } from './CasesSection';
 import { ProcessPipeline } from './ProcessPipeline';
 import { PricingSection } from './PricingSection';
 import { FAQSection } from './FAQSection';
@@ -18,6 +19,7 @@ export function NewLandingPage() {
       <HeroSection />
       <TechStackMarquee />
       <BentoGrid />
+      <CasesSection />
       <ProcessPipeline />
       <PricingSection />
       <FAQSection />
