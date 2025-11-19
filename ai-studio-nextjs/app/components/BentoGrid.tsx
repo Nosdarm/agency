@@ -5,40 +5,28 @@ import { BentoCard } from './BentoCard';
 
 const features = [
   {
-    icon: Code2,
-    title: 'Full Development Cycle',
-    description: 'Complete MVP development: design, web, mobile, testing. We use AI to accelerate, but code is written by senior developers.',
-    span: 'double' as const,
-  },
-  {
     icon: Rocket,
-    title: 'MVP in 2-4 Weeks',
-    description: 'From $5,000. Backend and frontend templates, ready design system, CI. Weekly demos with real progress.',
-    span: 'single' as const,
-  },
-  {
-    icon: Shield,
-    title: 'Clear Boundaries',
-    description: 'Fixed-price, SOW/DoD, feature freeze. Changes handled through transparent change requests.',
-    span: 'single' as const,
-  },
-  {
-    icon: Gauge,
-    title: 'Production-Ready Products',
-    description: 'Tech stack for your needs: React/Vite, Next.js, FastAPI/NestJS, PostgreSQL, Stripe, Redis.',
+    title: 'Weeks, Not Months.',
+    description: 'We don\'t bill by the hour, so we don\'t drag things out. Our AI workflows automate 40% of boilerplate code (CRUD, tests, types), letting us focus on your unique business logic.',
     span: 'double' as const,
   },
   {
     icon: Lock,
-    title: 'Security Basics',
-    description: 'Auth, roles, validation, logging. Minimum — JWT/OAuth + industry best practices.',
+    title: 'You Own the Code.',
+    description: 'No vendor lock-in. No "proprietary platform." We deploy to your GitHub and your cloud (AWS/Vercel) from Day 1. If you fire us, you keep everything.',
     span: 'single' as const,
   },
   {
-    icon: Clock,
-    title: 'Fast Start',
-    description: 'Specification within 48h after call. Deploy to Vercel/Render/Fly/Hetzner.',
+    icon: Shield,
+    title: 'Real Engineering.',
+    description: 'No-Code tools break at 1,000 users. We build on React & Python — the same stack used by Netflix and Uber. Scalable by design.',
     span: 'single' as const,
+  },
+  {
+    icon: Gauge,
+    title: 'Fixed Price Guarantee.',
+    description: 'Scope creep is our problem, not yours. You get a guaranteed price upfront. No hidden fees, no "hourly rate" surprises.',
+    span: 'double' as const,
   },
 ];
 
@@ -47,12 +35,11 @@ export function BentoGrid() {
     <section id="features" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20" aria-labelledby="features-heading">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <h2 id="features-heading" className="text-3xl sm:text-4xl font-semibold text-white">
-          AI-Accelerated MVP Development
+        <h2 id="features-heading" className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          The <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">"Anti-Agency"</span> Approach
         </h2>
-        <p className="mt-4 text-slate-300">
-          We use modern AI tools (Cursor, Claude, GitHub Copilot) to accelerate routine component development by 25-40%.
-          Architecture and code review remain with experienced developers.
+        <p className="mt-4 text-slate-300 text-lg">
+          Why smart founders choose us over freelancers and dev shops.
         </p>
       </div>
 

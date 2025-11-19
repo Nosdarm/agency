@@ -6,23 +6,23 @@ import { Phone, FileText, Code, Rocket } from 'lucide-react';
 const steps = [
   {
     icon: Phone,
-    title: 'Discovery Call',
-    description: 'We discuss your idea, requirements, and project goals in a 30-minute call.',
+    title: 'The No-BS Discovery',
+    description: 'We hop on a 30-min call to strip your idea down to its core value. We cut the fluff and define exactly what you need to start selling.',
   },
   {
     icon: FileText,
-    title: 'Specification',
-    description: 'Detailed spec with features, tech stack, and timeline delivered in 48 hours.',
+    title: 'Spec & Contract',
+    description: 'Within 48 hours, you get a detailed technical specification and a fixed-price contract. You know exactly what you\'re buying.',
   },
   {
     icon: Code,
-    title: 'Development',
-    description: 'Weekly demos, continuous integration, and transparent progress tracking.',
+    title: 'The Sprint',
+    description: 'We build in weekly cycles. You get a clickable demo every Friday. You see progress, not just reports.',
   },
   {
     icon: Rocket,
-    title: 'Deployment',
-    description: 'Production deployment with monitoring, documentation, and 7 days bug support.',
+    title: 'Handover & Launch',
+    description: 'We deploy to production, set up analytics, and hand over the keys. Includes a video walkthrough of the codebase for your future team.',
   },
 ];
 
@@ -31,12 +31,9 @@ export function ProcessPipeline() {
     <section id="process" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
       {/* Section Header */}
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <h2 className="text-3xl sm:text-4xl font-semibold text-white">
-          From Idea to Production
+        <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white">
+          From Idea to <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-cyan-400">Revenue</span> in 4 Steps
         </h2>
-        <p className="mt-4 text-slate-300">
-          Our streamlined process ensures rapid delivery without compromising quality
-        </p>
       </div>
 
       {/* Pipeline Container */}

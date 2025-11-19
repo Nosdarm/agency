@@ -61,23 +61,22 @@ export function CTASection() {
           {/* Content */}
           <div className="relative z-10 text-center max-w-3xl mx-auto">
             <motion.h2
-              className="text-3xl sm:text-4xl lg:text-5xl font-semibold text-white mb-6"
+              className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-6"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
-              Ready to Build Your MVP?
+              Don't let your idea stay in your notes app.
             </motion.h2>
 
             <motion.p
-              className="text-lg text-slate-300 mb-10"
+              className="text-xl text-slate-300 mb-10"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
             >
-              Get a detailed specification in 48 hours. Start development next week.
-              Launch your product in 2-4 weeks.
+              You have the vision. We have the engine. Let's build something great <strong className="text-white">before someone else does.</strong>
             </motion.p>
 
             <motion.a
@@ -90,7 +89,7 @@ export function CTASection() {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
-              Start Your Project
+              Book 15-min Discovery Call
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </motion.a>
           </div>

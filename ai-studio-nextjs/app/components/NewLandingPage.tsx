@@ -6,6 +6,7 @@ import { TechStackMarquee } from './TechStackMarquee';
 import { BentoGrid } from './BentoGrid';
 import { ProcessPipeline } from './ProcessPipeline';
 import { PricingSection } from './PricingSection';
+import { FAQSection } from './FAQSection';
 import { ContactSection } from './ContactSection';
 import { CTASection } from './CTASection';
 import { Footer } from './Footer';
@@ -19,6 +20,7 @@ export function NewLandingPage() {
       <BentoGrid />
       <ProcessPipeline />
       <PricingSection />
+      <FAQSection />
       <ContactSection />
       <CTASection />
       <Footer />

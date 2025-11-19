@@ -7,38 +7,48 @@ import { GlowButton } from './GlowButton';
 const pricingPlans = [
   {
     name: 'MVP Core',
+    subtitle: 'Start here',
     price: '$5,900',
-    description: 'Perfect for validating your idea with real users',
-    timeframe: '2 weeks',
+    description: 'Perfect for validating an idea with early adopters.',
+    timeframe: '4 Weeks',
     features: [
-      '5 core screens/pages',
-      'User authentication',
-      'Basic database setup',
-      'Responsive design',
-      'Core business logic',
-      '2 weeks support',
-      'Source code ownership',
-      'Deploy to cloud'
+      'Full Web App (React + FastAPI)',
+      'Authentication & User Roles',
+      '3-5 Core CRUD Features',
+      'Payment Integration (Stripe)',
+      'Admin Dashboard',
+      'Delivered in 4 Weeks'
     ],
     popular: false
   },
   {
-    name: 'MVP Growth',
+    name: 'Growth Ready',
+    subtitle: 'Most Popular',
     price: '$7,900',
-    description: 'Scale faster with advanced features and integrations',
-    timeframe: '3-4 weeks',
+    description: 'For startups ready to onboard paying customers immediately.',
+    timeframe: '5 Weeks',
     features: [
-      'Everything in MVP Core',
-      '10+ screens/pages',
-      'Payment integration',
-      'Admin dashboard',
-      'Email notifications',
-      'Analytics setup',
-      '3rd party API integrations',
-      '30 days support',
-      'SEO optimization'
+      'Everything in Core',
+      'AI Features Integration (LLM)',
+      'Advanced Analytics & Tracking',
+      'Email/Push Notifications System',
+      'Priority 7-Day Support Window',
+      'Delivered in 5 Weeks'
     ],
     popular: true
+  },
+  {
+    name: 'AI Booster',
+    subtitle: 'Add-on',
+    price: '+$3,000',
+    description: 'Add "Magic" to your existing product.',
+    timeframe: 'Add-on',
+    features: [
+      'Custom RAG (Chat with PDF/Data)',
+      'AI Agents & Automation',
+      'OpenAI / Claude API Integration'
+    ],
+    popular: false
   }
 ];
 
@@ -58,16 +68,16 @@ export function PricingSection() {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
-            Transparent Pricing
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400 bg-clip-text text-transparent">
+            Simple, Transparent Pricing
           </h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-            Fixed prices. No hidden fees. Pay once, own forever.
+            Choose the speed that fits your roadmap.
           </p>
         </motion.div>
 
         {/* Pricing Cards */}
-        <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {pricingPlans.map((plan, index) => (
             <motion.div
               key={plan.name}

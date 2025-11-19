@@ -22,18 +22,18 @@ const duplicatedStack = [...techStack, ...techStack];
 
 export function TechStackMarquee() {
   return (
-    <section className="relative py-16 overflow-hidden">
+    <section id="tech-stack" className="relative py-16 overflow-hidden">
       {/* Gradient Masks */}
       <div className="absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none" />
       <div className="absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none" />
 
       {/* Section Header */}
       <div className="text-center mb-12 px-4">
-        <h2 className="text-2xl sm:text-3xl font-semibold text-white">
-          Powered by Modern Stack
-        </h2>
-        <p className="text-slate-400 mt-2">
-          Best-in-class technologies for production-ready applications
+        <p className="text-xs sm:text-sm font-semibold tracking-widest text-violet-400 uppercase mb-4">
+          Powered by the Stack Unicorns Use
+        </p>
+        <p className="text-slate-400 text-sm">
+          React, Next.js, Python, FastAPI, PostgreSQL, OpenAI, Stripe
         </p>
       </div>
 

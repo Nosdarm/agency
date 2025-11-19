@@ -15,9 +15,25 @@ export function HeroSection() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-semibold leading-tight">
+          {/* Badge */}
+          <motion.div
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-violet-600/10 via-fuchsia-600/10 to-cyan-500/10 border border-violet-500/20 mb-6"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.05 }}
+          >
+            <span className="text-violet-400 font-medium text-sm">AI-Accelerated Development</span>
+            <span className="text-slate-400">•</span>
+            <span className="text-cyan-400 font-medium text-sm">Fixed Price</span>
+          </motion.div>
+
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
-              Build your MVP in weeks, not months
+              Stop Burning Cash.
+            </span>
+            <br />
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400">
+              Launch Your MVP in 4 Weeks.
             </span>
           </h1>
 
@@ -27,8 +43,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            AI-accelerated development that reduces time by 70%. Full-stack web & mobile apps,
-            built by senior developers using cutting-edge AI tools.
+            Traditional agencies take months and charge a fortune. We combine <strong className="text-white">senior engineers</strong> with AI acceleration to build <strong className="text-white">production-ready SaaS products</strong> for a fraction of the cost.
           </motion.p>
 
           <motion.div
@@ -39,42 +54,25 @@ export function HeroSection() {
           >
             <GlowButton href="#contact" variant="primary" className="whitespace-nowrap">
               <span className="flex items-center justify-center gap-2">
-                Start Your Project
+                Start Project
                 <ArrowRight className="w-4 h-4" />
               </span>
             </GlowButton>
 
-            <GlowButton href="#pricing" variant="secondary">
-              View Pricing
+            <GlowButton href="#tech-stack" variant="secondary">
+              See Our Stack
             </GlowButton>
           </motion.div>
 
-          {/* Quick Stats */}
-          <motion.div
-            className="mt-12 grid grid-cols-3 gap-6"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
+          {/* Social Proof */}
+          <motion.p
+            className="mt-8 text-sm text-slate-400"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <div>
-              <div className="text-2xl sm:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-violet-400 to-fuchsia-400">
-                2-4 weeks
-              </div>
-              <div className="text-sm text-slate-400 mt-1">To launch</div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-fuchsia-400 to-cyan-400">
-                70% faster
-              </div>
-              <div className="text-sm text-slate-400 mt-1">With AI tools</div>
-            </div>
-            <div>
-              <div className="text-2xl sm:text-3xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-violet-400">
-                $5k+
-              </div>
-              <div className="text-sm text-slate-400 mt-1">Starting price</div>
-            </div>
-          </motion.div>
+            Trusted by founders from <strong className="text-slate-300">YC</strong>, <strong className="text-slate-300">Techstars</strong>, and bootstrap communities.
+          </motion.p>
         </motion.div>
 
         {/* Right Side - Code Window */}
