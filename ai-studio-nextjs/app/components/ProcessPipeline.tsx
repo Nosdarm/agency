@@ -119,11 +119,6 @@ export function ProcessPipeline() {
                   <div className="absolute inset-0 rounded-full bg-gradient-to-br from-violet-500/20 to-fuchsia-500/20 blur-xl" />
                 </motion.div>
 
-                {/* Step Number */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-violet-600 text-white text-sm font-semibold flex items-center justify-center shadow-lg">
-                  {index + 1}
-                </div>
-
                 {/* Content */}
                 <h3 className="text-white font-semibold text-lg mb-2">{step.title}</h3>
                 <p className="text-slate-400 text-sm leading-relaxed">{step.description}</p>

@@ -37,9 +37,11 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <GlowButton href="#contact" variant="primary">
-              Start Your Project
-              <ArrowRight className="w-4 h-4" />
+            <GlowButton href="#contact" variant="primary" className="whitespace-nowrap">
+              <span className="flex items-center justify-center gap-2">
+                Start Your Project
+                <ArrowRight className="w-4 h-4" />
+              </span>
             </GlowButton>
 
             <GlowButton href="#pricing" variant="secondary">
