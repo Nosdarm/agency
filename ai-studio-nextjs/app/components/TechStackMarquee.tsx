@@ -24,8 +24,8 @@ export function TechStackMarquee() {
   return (
     <section className="relative py-16 overflow-hidden">
       {/* Gradient Masks */}
-      <div className="absolute inset-y-0 left-0 w-32 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none" />
-      <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-slate-950 to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-slate-950 to-transparent z-10 pointer-events-none" />
 
       {/* Section Header */}
       <div className="text-center mb-12 px-4">
@@ -40,7 +40,7 @@ export function TechStackMarquee() {
       {/* Marquee Container */}
       <div className="relative">
         <motion.div
-          className="flex gap-8"
+          className="flex gap-4 sm:gap-8"
           animate={{
             x: [0, -50 * techStack.length],
           }}
@@ -60,20 +60,20 @@ export function TechStackMarquee() {
               whileHover={{ scale: 1.1 }}
               transition={{ duration: 0.2 }}
             >
-              <div className="relative flex flex-col items-center justify-center w-32 h-32 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/10">
+              <div className="relative flex flex-col items-center justify-center w-24 h-24 sm:w-32 sm:h-32 rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 group-hover:border-white/30 group-hover:bg-white/10">
                 {/* Icon */}
-                <div className="text-4xl grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="text-2xl sm:text-4xl grayscale opacity-50 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300">
                   {tech.icon}
                 </div>
 
                 {/* Tech Name */}
-                <div className="mt-3 text-sm font-medium text-slate-400 group-hover:text-white transition-colors duration-300">
+                <div className="mt-2 sm:mt-3 text-xs sm:text-sm font-medium text-slate-400 group-hover:text-white transition-colors duration-300">
                   {tech.name}
                 </div>
 
                 {/* Hover Glow Effect */}
-                <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-violet-500/20 via-fuchsia-500/20 to-cyan-500/20 blur-xl" />
+                <div className="absolute inset-0 rounded-xl sm:rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                  <div className="absolute inset-0 rounded-xl sm:rounded-2xl bg-gradient-to-br from-violet-500/20 via-fuchsia-500/20 to-cyan-500/20 blur-xl" />
                 </div>
               </div>
             </motion.div>
