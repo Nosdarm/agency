@@ -7,7 +7,7 @@ const cases = [
   {
     title: "Forch | DeFi Dashboard",
     category: "FinTech & Analytics",
-    image: "/images/Forch.jpg",
+    image: "/images/Forch-optimized.jpg",
     desc: "High-frequency trading dashboard offering real-time analytics across multiple asset classes with bank-grade security.",
     stack: ["Next.js", "WebSockets", "Tailwind"],
     link: "#" // Можно оставить заглушку или ссылку на контакт
@@ -15,7 +15,7 @@ const cases = [
   {
     title: "DiniWorks | Team OS",
     category: "B2B SaaS Productivity",
-    image: "/images/Diniworks.jpg",
+    image: "/images/Diniworks-optimized.jpg",
     desc: "Complex project management platform featuring drag-and-drop Kanban boards, real-time chat, and team calendars.",
     stack: ["React", "PostgreSQL", "Redux"],
     link: "#"
@@ -23,7 +23,7 @@ const cases = [
   {
     title: "Neon Market | NFT Platform",
     category: "Web3 Marketplace",
-    image: "/images/Neon.jpg",
+    image: "/images/Neon-optimized.jpg",
     desc: "Fully immersive digital asset marketplace with auction mechanics and wallet integration handling 10k+ users.",
     stack: ["Web3.js", "Node.js", "AWS"],
     link: "#"
