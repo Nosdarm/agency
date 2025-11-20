@@ -59,7 +59,7 @@ export function CodeWindow() {
   }, [visibleCount]);
 
   return (
-    <div className="relative w-full max-w-md">
+    <div className="relative w-full max-w-md mx-auto px-2 sm:px-0">
       {/* Glow effect */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-violet-600/20 via-fuchsia-600/20 to-cyan-500/20 rounded-2xl blur opacity-75" />
 

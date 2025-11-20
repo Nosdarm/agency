@@ -41,9 +41,9 @@ export function Header() {
         <div className="flex items-center gap-3">
           <a
             href="#contact"
-            className="hidden md:inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 shadow hover:shadow-lg transition-shadow"
+            className="inline-flex items-center gap-2 rounded-xl px-3 py-2 md:px-4 md:py-2 text-xs md:text-sm font-medium text-white bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 shadow hover:shadow-lg transition-shadow whitespace-nowrap"
           >
-            Request Specification
+            Book Call
           </a>
 
           {/* Mobile Menu Toggle */}
@@ -86,7 +86,7 @@ export function Header() {
                 className="block text-center rounded-xl px-4 py-3 text-sm font-medium text-white bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 mt-4"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                Request Specification
+                Book Call
               </a>
             </nav>
           </motion.div>

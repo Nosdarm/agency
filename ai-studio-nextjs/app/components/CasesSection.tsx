@@ -43,14 +43,14 @@ export function CasesSection() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-y-10 gap-x-8">
           {cases.map((project, index) => (
             <div
               key={index}
               className="group relative bg-white/5 border border-white/10 rounded-2xl overflow-hidden hover:border-violet-500/50 transition-all duration-300 flex flex-col"
             >
               {/* Image Container */}
-              <div className="relative h-[240px] w-full overflow-hidden bg-slate-900">
+              <div className="relative aspect-video md:h-[240px] md:aspect-auto w-full overflow-hidden bg-slate-900">
                 <Image
                   src={project.image}
                   alt={project.title}
@@ -77,7 +77,7 @@ export function CasesSection() {
                   </div>
                 </div>
 
-                <p className="text-slate-400 text-sm leading-relaxed mb-6 flex-grow">
+                <p className="text-slate-400 text-base md:text-sm leading-relaxed mb-6 flex-grow">
                   {project.desc}
                 </p>
 

@@ -8,7 +8,7 @@ import { CodeWindow } from './CodeWindow';
 export function HeroSection() {
   return (
     <section id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-28 pb-16">
-      <div className="grid lg:grid-cols-2 gap-10 items-center">
+      <div className="flex flex-col md:flex-row gap-12 items-center">
         {/* Left Side - Text Content */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -27,7 +27,7 @@ export function HeroSection() {
             <span className="text-cyan-400 font-medium text-sm">Fixed Price</span>
           </motion.div>
 
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight tracking-tight">
+          <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
               Stop Burning Cash.
             </span>
@@ -38,7 +38,7 @@ export function HeroSection() {
           </h1>
 
           <motion.p
-            className="mt-6 text-lg text-slate-300 leading-relaxed max-w-xl"
+            className="mt-6 text-base md:text-lg text-slate-300 leading-relaxed max-w-xl"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
