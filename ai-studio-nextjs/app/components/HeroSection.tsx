@@ -3,51 +3,49 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { GlowButton } from './GlowButton';
-import HeroVisual from './HeroVisual';
+import { BackgroundBeams } from './ui/background-beams';
 
 export function HeroSection() {
   return (
-    <section id="top" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20 lg:pt-28 pb-16">
-      <div className="flex flex-col md:flex-row gap-12 items-center">
-        {/* Left Side - Text Content */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
+    <section id="top" className="relative w-full min-h-screen flex flex-col items-center justify-center overflow-hidden bg-neutral-950 antialiased">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full pt-20 pb-20 md:pt-0">
+        <div className="flex flex-col items-center justify-center text-center">
           {/* Badge */}
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gradient-to-r from-violet-600/10 via-fuchsia-600/10 to-cyan-500/10 border border-violet-500/20 mb-6"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-900/50 border border-neutral-800 mb-8 backdrop-blur-sm"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.05 }}
           >
-            <span className="text-violet-400 font-medium text-sm">AI-Accelerated Development</span>
-            <span className="text-slate-400">•</span>
-            <span className="text-cyan-400 font-medium text-sm">Fixed Price</span>
+            <span className="text-neutral-400 font-medium text-sm">AI-Native Studio</span>
           </motion.div>
 
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight tracking-tight">
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400">
+          <motion.h1
+            className="text-5xl md:text-7xl font-bold leading-tight tracking-tight max-w-4xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600">
               Stop Burning Cash.
             </span>
             <br />
-            <span className="bg-clip-text text-transparent bg-gradient-to-r from-violet-400 via-fuchsia-400 to-cyan-400">
+            <span className="bg-clip-text text-transparent bg-gradient-to-b from-neutral-200 to-neutral-600">
               Launch Your MVP in 4 Weeks.
             </span>
-          </h1>
+          </motion.h1>
 
           <motion.p
-            className="mt-6 text-base md:text-lg text-slate-300 leading-relaxed max-w-xl"
+            className="mt-8 text-lg md:text-xl text-neutral-400 leading-relaxed max-w-2xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            Traditional agencies take months and charge a fortune. We combine <strong className="text-white">senior engineers</strong> with AI acceleration to build <strong className="text-white">production-ready SaaS products</strong> for a fraction of the cost.
+            Traditional agencies take months and charge a fortune. We combine <strong className="text-neutral-200">senior engineers</strong> with AI acceleration to build <strong className="text-neutral-200">production-ready SaaS products</strong> for a fraction of the cost.
           </motion.p>
 
           <motion.div
-            className="mt-8 flex flex-col sm:flex-row gap-4"
+            className="mt-10 flex flex-col sm:flex-row gap-4 justify-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
@@ -66,24 +64,17 @@ export function HeroSection() {
 
           {/* Social Proof */}
           <motion.p
-            className="mt-8 text-sm text-slate-400"
+            className="mt-12 text-sm text-neutral-500"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            Trusted by founders from <strong className="text-slate-300">YC</strong>, <strong className="text-slate-300">Techstars</strong>, and bootstrap communities.
+            Trusted by founders from <strong className="text-neutral-400">YC</strong>, <strong className="text-neutral-400">Techstars</strong>, and bootstrap communities.
           </motion.p>
-        </motion.div>
-
-        {/* Right Side - Hero Visual */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <HeroVisual />
-        </motion.div>
+        </div>
       </div>
+
+      <BackgroundBeams />
     </section>
   );
 }
