@@ -1,10 +1,57 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Mail, MessageSquare, Send } from 'lucide-react';
+import { Mail, MessageSquare, Send, CheckCircle, AlertCircle } from 'lucide-react';
 import { GlowButton } from './GlowButton';
+import { useState, FormEvent } from 'react';
 
 export function ContactSection() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    setErrorMessage('');
+
+    const formData = new FormData(e.currentTarget);
+    const data = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      packageName: 'Quick Contact Form',
+      message: formData.get('project') as string,
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        (e.target as HTMLFormElement).reset();
+        setTimeout(() => setSubmitStatus('idle'), 5000);
+      } else {
+        setSubmitStatus('error');
+        setErrorMessage(result.error || 'Failed to send message');
+      }
+    } catch (error) {
+      setSubmitStatus('error');
+      setErrorMessage('Network error. Please try again.');
+      console.error('Submit error:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="relative py-24 px-6 overflow-hidden">
       {/* Background gradient blobs */}
@@ -94,7 +141,7 @@ export function ContactSection() {
           <div className="relative rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
             <h3 className="text-2xl font-semibold mb-6 text-center">Quick Contact Form</h3>
 
-            <form className="space-y-4" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <form className="space-y-4" onSubmit={handleSubmit}>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-slate-300 mb-2">
@@ -139,13 +186,47 @@ export function ContactSection() {
                 />
               </div>
 
-              <GlowButton
-                variant="primary"
-                className="w-full justify-center"
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="relative inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-medium transition-all duration-300 overflow-hidden group w-full bg-gradient-to-r from-violet-600 via-fuchsia-600 to-cyan-500 text-white shadow-lg shadow-violet-500/25 hover:shadow-violet-500/50 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send className="w-4 h-4" />
-                Send Message
-              </GlowButton>
+                {isSubmitting ? (
+                  <>
+                    <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Sending...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4" />
+                    Send Message
+                  </>
+                )}
+              </button>
+
+              {/* Success Message */}
+              {submitStatus === 'success' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 p-4 rounded-xl bg-green-500/10 border border-green-500/20 text-green-400"
+                >
+                  <CheckCircle className="w-5 h-5" />
+                  <p>Message sent successfully! We'll get back to you within 24 hours.</p>
+                </motion.div>
+              )}
+
+              {/* Error Message */}
+              {submitStatus === 'error' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center gap-2 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400"
+                >
+                  <AlertCircle className="w-5 h-5" />
+                  <p>{errorMessage}</p>
+                </motion.div>
+              )}
             </form>
           </div>
         </motion.div>
