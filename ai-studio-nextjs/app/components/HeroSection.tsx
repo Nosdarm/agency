@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { GlowButton } from './GlowButton';
-import { CodeWindow } from './CodeWindow';
+import HeroVisual from './HeroVisual';
 
 export function HeroSection() {
   return (
@@ -75,13 +75,13 @@ export function HeroSection() {
           </motion.p>
         </motion.div>
 
-        {/* Right Side - Code Window */}
+        {/* Right Side - Hero Visual */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <CodeWindow />
+          <HeroVisual />
         </motion.div>
       </div>
     </section>
