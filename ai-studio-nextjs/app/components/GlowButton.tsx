@@ -86,7 +86,7 @@ export function GlowButton({
       )}
 
       {/* Content */}
-      <span className="relative z-10">{children}</span>
+      <span className="relative z-10 flex items-center gap-2">{children}</span>
 
       {/* Hover scale effect */}
       <motion.div
