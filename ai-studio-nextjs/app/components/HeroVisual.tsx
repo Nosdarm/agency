@@ -31,17 +31,6 @@ const cardVariants = {
   },
 };
 
-// Анимация постоянной левитации после сборки
-const floatAnimation = {
-  y: [-8, 8, -8],
-  rotateX: [2, -2, 2],
-  rotateY: [-2, 2, -2],
-  transition: {
-    duration: 6,
-    repeat: Infinity,
-    ease: "easeInOut",
-  },
-};
 
 export default function HeroVisual() {
   return (
@@ -55,7 +44,16 @@ export default function HeroVisual() {
         initial="hidden"
         animate="visible"
         // После появления включаем левитацию
-        whileInView={floatAnimation}
+        whileInView={{
+          y: [-8, 8, -8],
+          rotateX: [2, -2, 2],
+          rotateY: [-2, 2, -2],
+        }}
+        transition={{
+          duration: 6,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
         viewport={{ once: true }}
         className="relative w-full h-full flex items-center justify-center transform-style-3d"
       >
