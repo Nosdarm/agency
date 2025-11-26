@@ -47,21 +47,11 @@ export const metadata: Metadata = {
     siteName: 'BuildItFast',
     title: 'Launch Your MVP in 2-4 Weeks | BuildItFast.ai',
     description: 'AI + Senior Developers = 70% faster MVP development. From $5,000, fixed price.',
-    images: [
-      {
-        url: '/og-image.jpg',
-        width: 1200,
-        height: 630,
-        alt: 'BuildItFast - AI-Powered MVP Development',
-        type: 'image/jpeg',
-      },
-    ],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'MVP in 2-4 Weeks from $5k | BuildItFast',
     description: 'AI-powered MVP development. 3x faster, 70% cheaper.',
-    images: ['/og-image.jpg'],
     creator: '@builditfast',
   },
   robots: {
