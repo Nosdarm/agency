@@ -1,7 +1,8 @@
 import { ImageResponse } from 'next/og';
 
 export const runtime = 'edge';
-export const alt = 'BuildItFast - AI-Powered MVP Development in 2-4 Weeks';
+
+export const alt = 'BuildItFast - AI-Powered MVP Development';
 export const size = {
   width: 1200,
   height: 630,
@@ -9,6 +10,8 @@ export const size = {
 export const contentType = 'image/png';
 
 export default async function Image() {
+  const logoUrl = new URL('/images/logo-icon.png', 'https://builditfast.ai').toString();
+
   return new ImageResponse(
     (
       <div
@@ -19,21 +22,31 @@ export default async function Image() {
           flexDirection: 'column',
           alignItems: 'center',
           justifyContent: 'center',
-          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%)',
+          background: 'linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%)',
           fontFamily: 'system-ui, sans-serif',
         }}
       >
-        {/* Gradient background effect */}
+        {/* Decorative elements */}
         <div
           style={{
             position: 'absolute',
-            top: '-20%',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            width: '800px',
-            height: '800px',
-            background: 'radial-gradient(circle, rgba(139, 92, 246, 0.15) 0%, transparent 70%)',
-            filter: 'blur(60px)',
+            top: -100,
+            right: -100,
+            width: 400,
+            height: 400,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(139,92,246,0.3) 0%, transparent 70%)',
+          }}
+        />
+        <div
+          style={{
+            position: 'absolute',
+            bottom: -50,
+            left: -50,
+            width: 300,
+            height: 300,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, rgba(6,182,212,0.2) 0%, transparent 70%)',
           }}
         />
 
@@ -42,100 +55,88 @@ export default async function Image() {
           style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '16px',
-            marginBottom: '40px',
+            gap: 16,
+            marginBottom: 40,
           }}
         >
-          <div
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={logoUrl}
+            alt="BuildItFast Logo"
+            width={60}
+            height={60}
             style={{
-              width: '64px',
-              height: '64px',
-              borderRadius: '16px',
-              background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #06b6d4 100%)',
+              borderRadius: 16,
             }}
           />
-          <div
+          <span
             style={{
-              fontSize: '48px',
-              fontWeight: '700',
+              fontSize: 48,
+              fontWeight: 700,
               color: '#ffffff',
               letterSpacing: '-0.02em',
             }}
           >
             BuildItFast
-          </div>
-        </div>
-
-        {/* Main heading */}
-        <div
-          style={{
-            fontSize: '72px',
-            fontWeight: '700',
-            color: '#ffffff',
-            textAlign: 'center',
-            maxWidth: '1000px',
-            lineHeight: '1.1',
-            marginBottom: '24px',
-          }}
-        >
-          MVP Development in{' '}
-          <span
-            style={{
-              background: 'linear-gradient(135deg, #8b5cf6 0%, #ec4899 50%, #06b6d4 100%)',
-              backgroundClip: 'text',
-              color: 'transparent',
-            }}
-          >
-            2-4 Weeks
           </span>
         </div>
 
-        {/* Subtitle */}
+        {/* Main headline */}
         <div
           style={{
-            fontSize: '32px',
-            color: '#a1a1aa',
-            textAlign: 'center',
-            maxWidth: '800px',
-            lineHeight: '1.4',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            gap: 16,
           }}
         >
-          AI-Accelerated Development • Fixed Pricing from $5,000
+          <span
+            style={{
+              fontSize: 72,
+              fontWeight: 800,
+              color: '#ffffff',
+              textAlign: 'center',
+              lineHeight: 1.1,
+            }}
+          >
+            MVP in 2-4 Weeks
+          </span>
+          <span
+            style={{
+              fontSize: 36,
+              color: '#a3a3a3',
+              textAlign: 'center',
+            }}
+          >
+            AI-Powered Development from $5,000
+          </span>
         </div>
 
         {/* Features */}
         <div
           style={{
             display: 'flex',
-            gap: '32px',
-            marginTop: '48px',
+            gap: 32,
+            marginTop: 48,
           }}
         >
-          {['Full Stack', 'Mobile Ready', 'Production Deploy'].map((feature) => (
+          {['70% Faster', 'Fixed Price', 'Full Ownership'].map((feature) => (
             <div
               key={feature}
               style={{
                 display: 'flex',
                 alignItems: 'center',
-                gap: '12px',
-                fontSize: '24px',
-                color: '#d4d4d8',
+                gap: 8,
+                padding: '12px 24px',
+                borderRadius: 50,
+                background: 'rgba(255,255,255,0.1)',
+                border: '1px solid rgba(255,255,255,0.2)',
               }}
             >
-              <div
-                style={{
-                  width: '24px',
-                  height: '24px',
-                  borderRadius: '50%',
-                  background: '#10b981',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                }}
-              >
-                ✓
-              </div>
-              {feature}
+              <span style={{ color: '#22c55e', fontSize: 24 }}>✓</span>
+              <span style={{ color: '#ffffff', fontSize: 20, fontWeight: 500 }}>
+                {feature}
+              </span>
             </div>
           ))}
         </div>
