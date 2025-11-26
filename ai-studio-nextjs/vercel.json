@@ -1,0 +1,13 @@
+{
+  "git": {
+    "deploymentEnabled": {
+      "prod": true,
+      "dev": true,
+      "main": false
+    }
+  },
+  "github": {
+    "silent": false,
+    "autoJobCancelation": true
+  }
+}

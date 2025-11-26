@@ -26,8 +26,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: `${baseUrl}/blog`,
       lastModified: currentDate,
-      changeFrequency: 'weekly',
-      priority: 0.8,
+      changeFrequency: 'daily',
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/blog/how-much-does-mvp-development-cost`,

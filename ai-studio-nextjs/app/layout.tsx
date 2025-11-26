@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google';
 import './globals.css';
 import { OrganizationSchema, ServiceSchema, BreadcrumbSchema, LocalBusinessSchema } from './structured-data';
 import { GoogleAnalytics } from './analytics';
+import { ShaderBackground } from './components/ShaderBackground';
 
 const inter = Inter({
   subsets: ['latin', 'cyrillic'],
@@ -94,7 +95,8 @@ export default function RootLayout({
         <BreadcrumbSchema />
         <LocalBusinessSchema />
       </head>
-      <body className={`${inter.className} antialiased`}>
+      <body className={`${inter.className} antialiased bg-slate-950 text-slate-100`}>
+        <ShaderBackground />
         {process.env.NEXT_PUBLIC_GA_ID && <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />}
         {children}
       </body>

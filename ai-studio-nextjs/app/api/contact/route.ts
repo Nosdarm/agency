@@ -18,7 +18,7 @@ export async function POST(request: Request) {
     const { name, email, packageName, message } = body;
 
     // Validate input
-    if (!name || !email || !packageName) {
+    if (!name || !email) {
       return NextResponse.json(
         { error: 'Missing required fields' },
         { status: 400 }
@@ -43,10 +43,10 @@ export async function POST(request: Request) {
       from: 'BuildItFast <onboarding@resend.dev>',
       to: recipientEmail,
       replyTo: email,
-      subject: `Specification Request — ${name}`,
+      subject: `${packageName ? packageName + ' — ' : ''}Contact from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Package:</strong> ${packageName}</p>
+        ${packageName ? `<p><strong>Package:</strong> ${packageName}</p>` : ''}
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <hr />
