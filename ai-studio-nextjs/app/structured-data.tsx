@@ -8,8 +8,9 @@ export function OrganizationSchema() {
           "@type": "Organization",
           "name": "BuildItFast",
           "url": "https://builditfast.ai",
-          "logo": "https://builditfast.ai/logo.png",
-          "description": "AI-powered MVP development in 1-2 weeks",
+          "logo": "https://builditfast.ai/images/logo-icon.png",
+          "image": "https://builditfast.ai/opengraph-image",
+          "description": "AI-powered MVP development in 2-4 weeks. Fixed price from $5,000.",
           "address": {
             "@type": "PostalAddress",
             "addressCountry": "Ukraine"
@@ -155,6 +156,9 @@ export function LocalBusinessSchema() {
           "@context": "http://schema.org",
           "@type": "LocalBusiness",
           "name": "BuildItFast",
+          "image": "https://builditfast.ai/opengraph-image",
+          "logo": "https://builditfast.ai/images/logo-icon.png",
+          "url": "https://builditfast.ai",
           "address": {
             "@type": "PostalAddress",
             "addressCountry": "Ukraine"
