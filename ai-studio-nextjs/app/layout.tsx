@@ -79,9 +79,6 @@ export const metadata: Metadata = {
   alternates: {
     canonical: 'https://builditfast.ai',
   },
-  verification: {
-    google: 'YOUR_GOOGLE_VERIFICATION_CODE',
-  },
   category: 'technology',
 };
 
