@@ -44,7 +44,12 @@
       "Bash(node configure-vercel.js:*)",
       "Bash(node configure-vercel.cjs:*)",
       "Bash(git remote:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(node scripts/optimize-images.mjs:*)",
+      "Bash(del /F /Q \"ai-studio-nextjs\\.next\\dev\\lock\" 2)",
+      "Bash(dir:*)",
+      "Bash(cat:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": [],
     "ask": []
