@@ -36,17 +36,6 @@ const nextConfig: NextConfig = {
       }
     ]
   },
-
-  // Redirects for SEO
-  async redirects() {
-    return [
-      {
-        source: '/mvp-development',
-        destination: '/mvp-development-services',
-        permanent: true
-      }
-    ]
-  },
 };
 
 export default nextConfig;
